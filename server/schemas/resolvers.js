@@ -1,28 +1,42 @@
-const { Tech, Matchup } = require('../models');
+// const { Tech, Matchup } = require('../models');
+const { User, Food } = require('../models')
+
 
 const resolvers = {
   Query: {
-    tech: async () => {
-      return Tech.find({});
-    },
-    matchups: async (parent, { _id }) => {
-      const params = _id ? { _id } : {};
-      return Matchup.find(params);
+    foods: () => {
+      return getAllFoods();
+    }
     },
   },
   Mutation: {
-    createMatchup: async (parent, args) => {
-      const matchup = await Matchup.create(args);
-      return matchup;
+    bookmarkedFood: async (parent, { foodkData }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { savedFood: foodData } }, // savedFood would be part of the User model
+          { new: true }
+        );
+
+        return updatedUser;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
     },
-    createVote: async (parent, { _id, techNum }) => {
-      const vote = await Matchup.findOneAndUpdate(
-        { _id },
-        { $inc: { [`tech${techNum}_votes`]: 1 } },
-        { new: true }
-      );
-      return vote;
-    },
+
+    // saveBook: async (parent, { bookData }, context) => {
+    //   if (context.user) {
+    //     const updatedUser = await User.findByIdAndUpdate(
+    //       { _id: context.user._id },
+    //       { $push: { savedBooks: bookData } },
+    //       { new: true }
+    //     );
+
+    //     return updatedUser;
+    //   }
+
+    //   throw new AuthenticationError('You need to be logged in!');
+    // },
   },
 };
 
