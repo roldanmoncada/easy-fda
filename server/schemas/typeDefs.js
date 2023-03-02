@@ -13,13 +13,13 @@ const typeDefs = gql`
     description: String
     dataType: String
     publicationDate: String
-    foodNutrients: [FoodNutrients z] }
+    foodNutrients: [FoodNutrients] }
 
     type FoodNutrients {
       number: String
       name: String
       amount: Int
-      unitName: String z    
+      unitName: String   
       derivationCode: String
       derivationDescription: String
     }
@@ -31,13 +31,11 @@ const typeDefs = gql`
    
 
   type Query {
-    foods: [Foods]
-    foodById( fdcId: String): Food!
-    foodByName( description: String): Food!
+    foods: [Food]
+    foodById( fdcId: String): Food
+    foodByName(description: String): Food
     nutrients: [FoodNutrients]
-    nutrient:(name: String
-      amount: Int
-      unitName: String): FoodNutrient!
+    nutrient(name: String, amount: Int, unitName: String): FoodNutrient
   }
 
   type Mutation {
@@ -45,7 +43,7 @@ const typeDefs = gql`
 		login(email: String!, password: String!): Auth
     addFood(fdcId: String!, description: String!, dataType: String, publicationDate: String, foodNutrients: [String ]): User
     removeFood(fdcId: String!, description: String!, dataType: String!, publicationDate: String!, foodNutrients: [String ]!): User
-    updateUserFoods(foods: [fdcId:]!): User
+    updateUserFoods(foods: [fdcId]!): User
     removeUser(_id: ID!): User
   }
 `;
