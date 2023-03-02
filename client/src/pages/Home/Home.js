@@ -20,7 +20,6 @@ const Home = () => {
             <span className="icon-close">
               <i className="fas fa-xmark"></i>
             </span>
-
             <div className="form-box login ">
               <h2>Login</h2>
               <form action="#">
@@ -58,9 +57,7 @@ const Home = () => {
                 </div>
               </form>
             </div>
-
             {/* ----------Register-------- */}
-
             <div className="  form-box register">
               <h2>Registration</h2>
               <form action="#">

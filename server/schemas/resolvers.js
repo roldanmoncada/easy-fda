@@ -1,14 +1,13 @@
 // const { Tech, Matchup } = require('../models');
-const { User, Food } = require('../models')
-
+const { User, Food } = require("../models");
 
 const resolvers = {
   Query: {
     foods: () => {
       return getAllFoods();
-    }
     },
   },
+
   Mutation: {
     bookmarkedFood: async (parent, { foodkData }, context) => {
       if (context.user) {
@@ -21,7 +20,7 @@ const resolvers = {
         return updatedUser;
       }
 
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError("You need to be logged in!");
     },
 
     // saveBook: async (parent, { bookData }, context) => {

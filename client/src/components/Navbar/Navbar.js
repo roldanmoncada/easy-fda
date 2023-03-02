@@ -2,7 +2,6 @@ import { React, useState } from "react";
 import "./Navbar.css";
 
 const Navbar = () => {
-  var test;
   const [classIcon, setIcon] = useState(false);
   const [closeNav, setCloseNav] = useState(false);
   function handleClick() {
@@ -29,6 +28,11 @@ const Navbar = () => {
         <li>
           <a href="/" className="nav-links">
             <i className=" fa-solid fa-house-user"></i>HOME
+          </a>
+        </li>
+        <li>
+          <a href="/Dashboard" className="nav-links">
+            <i className=" fa-solid fa-users-gear"></i>Dashboard
           </a>
         </li>
         <li>
