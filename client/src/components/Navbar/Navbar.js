@@ -2,6 +2,7 @@ import { React, useState } from "react";
 import "./Navbar.css";
 
 const Navbar = () => {
+  var test;
   const [classIcon, setIcon] = useState(false);
   const [closeNav, setCloseNav] = useState(false);
   function handleClick() {
