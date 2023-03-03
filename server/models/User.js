@@ -28,7 +28,18 @@ const userSchema = new Schema({
       trim: true,
     },
   ],
-});
+    // set savedBooks to be an array of data that adheres to the bookSchema
+    savedFood: [foodSchema],
+    // set this to use virtual below
+    
+},
+{
+  toJSON: {
+    virtuals: true,
+  },
+
+}
+);
 
 // set up pre-save middleware to create password
 userSchema.pre('save', async function (next) {
@@ -44,17 +55,6 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
-  },
-  // set savedBooks to be an array of data that adheres to the bookSchema
-  savedFood: [foodSchema],
-},
-// set this to use virtual below
-{
-  toJSON: {
-    virtuals: true,
-  },
-
-});
 
 userSchema.virtual('foodCount').get(function () {
   return this.savedFood.length;
