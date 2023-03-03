@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const bcrypt = require('bcrypt');
+const { foodSchema } = require('./Food')
 
 const userSchema = new Schema({
   username: {
@@ -8,16 +8,18 @@ const userSchema = new Schema({
     required: true,
     unique: true,
     trim: true,
+
   },
   email: {
     type: String,
     required: true,
     unique: true,
-    match: [/.+@.+\..+/, 'Must match an email address!'],
+    match: [/.+@.+\..+/, 'Must use a valid email address'],
   },
   password: {
     type: String,
     required: true,
+
     minlength: 5,
   },
   foods: [
@@ -42,6 +44,22 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
+  },
+  // set savedBooks to be an array of data that adheres to the bookSchema
+  savedFood: [foodSchema],
+},
+// set this to use virtual below
+{
+  toJSON: {
+    virtuals: true,
+  },
+
+});
+
+userSchema.virtual('foodCount').get(function () {
+  return this.savedFood.length;
+});
+
 
 const User = model('User', userSchema);
 

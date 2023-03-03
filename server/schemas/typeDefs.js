@@ -9,6 +9,7 @@ const typeDefs = gql`
     foods: [Food]
   }
 
+
   type Food { fdcId: Int
     description: String
     dataType: String
@@ -45,6 +46,16 @@ const typeDefs = gql`
     removeFood(fdcId: String!, description: String!, dataType: String!, publicationDate: String!, foodNutrients: [String ]!): User
     updateUserFoods(foods: [fdcId]!): User
     removeUser(_id: ID!): User
+
+
+  // type Mutation {
+  //  addFood(fdcId: Int!,
+  //    description: String!,
+  //    dataType: String!,
+  //    publicationDate: String!,
+  //    foodCode: String,
+  //    nbdNumber: String,
+  //    foodNutrients: [FoodNutrients]!): Food!
   }
 `;
 
