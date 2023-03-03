@@ -44,4 +44,4 @@ const foodSchema = new Schema({
   ],
 });
 
-module.exports = foodSchema;
+module.exports = { foodSchema };
