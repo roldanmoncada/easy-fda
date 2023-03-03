@@ -7,7 +7,7 @@ export const QUERY_ME = gql`
       username
       email
       password
-      savedFoods {
+      savedFood {
         fdcId: Int
         description: String
         dataType: String
