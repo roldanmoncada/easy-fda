@@ -1,10 +1,8 @@
-const { Schema } = require('mongoose');
-
-
+const { Schema } = require("mongoose");
 
 const foodSchema = new Schema({
   fdcId: {
-    type: Integer,
+    type: Number,
     required: true,
     unique: true,
   },
@@ -41,10 +39,9 @@ const foodSchema = new Schema({
   foodNutrients: [
     {
       type: String,
-      required: true
-    }
-  ]
+      required: true,
+    },
+  ],
 });
-
 
 module.exports = foodSchema;

@@ -31,6 +31,11 @@ const Navbar = () => {
           </a>
         </li>
         <li>
+          <a href="/Dashboard" className="nav-links">
+            <i className=" fa-solid fa-users-gear"></i>Dashboard
+          </a>
+        </li>
+        <li>
           <a href="/About" className="nav-links">
             <i className=" fa-solid fa-circle-info"></i>ABOUT
           </a>
