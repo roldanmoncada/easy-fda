@@ -8,7 +8,7 @@ const resolvers = {
       return Food.find();
     },
 
-    food: async (parent, { foodId }) => {
+    foodById: async (parent, { foodId }) => {
       return Food.findOne({ _id: foodId });
     },
     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
@@ -45,18 +45,18 @@ const resolvers = {
     },
 
     // Add a third argument to the resolver to access data in our `context`
-    addFood: async (parent, { userId, food }) => {
-      return User.findOneAndUpdate(
-        { _id: userId },
-        {
-          $addToSet: { foods: food },
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
-    },
+    // addFood: async (parent, { userId, food }) => {
+    //   return User.findOneAndUpdate(
+    //     { _id: userId },
+    //     {
+    //       $addToSet: { foods: food },
+    //     },
+    //     {
+    //       new: true,
+    //       runValidators: true,
+    //     }
+    //   );
+    // },
     removeUser: async (parent, { userId }) => {
       return User.findOneAndDelete({ _id: userId });
     },
@@ -67,7 +67,7 @@ const resolvers = {
         { new: true }
       );
     },
-    bookmarkedFood: async (_parent, { foodData }, context) => {
+    savedFood: async (_parent, { foodData }, context) => {
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
