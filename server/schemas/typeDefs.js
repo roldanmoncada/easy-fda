@@ -43,20 +43,10 @@ const typeDefs = gql`
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
 		login(email: String!, password: String!): Auth
-    addFood(fdcId: String!, description: String!, dataType: String, publicationDate: String, foodNutrients: [String ]): User
-    removeFood(fdcId: String!, description: String!, dataType: String!, publicationDate: String!, foodNutrients: [String ]!): User
+    addFood(fdcId: String!, description: String!, dataType: String, publicationDate: String, foodNutrients: [FoodNutrients]): User
+    removeFood(fdcId: String!, description: String!, dataType: String!, publicationDate: String!, foodNutrients: [FoodNutrients]!): User
     updateUserFoods(foods: [fdcId]!): User
     removeUser(_id: ID!): User
-
-
-  // type Mutation {
-  //  addFood(fdcId: Int!,
-  //    description: String!,
-  //    dataType: String!,
-  //    publicationDate: String!,
-  //    foodCode: String,
-  //    nbdNumber: String,
-  //    foodNutrients: [FoodNutrients]!): Food!
   }
 `;
 
