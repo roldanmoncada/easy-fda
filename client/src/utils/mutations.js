@@ -13,18 +13,16 @@ export const LOGIN_USER = gql`
 `;
 
 export const SAVE_FOOD = gql`
-  mutation bookmarkedFood($foodData: FoodInput!) {
-    bookmarkedFood($foodData: FoodInput!) {
+  mutation savedFood($foodData: FoodInput!) {
+    savedFood($foodData: FoodInput!) {
       _id
       username
       email
-      savedBooks {
-        bookId
-        authors
-        image
+      savedFood {
+        fdcId
         description
-        title
-        link
+        dataType
+        publicationDate
       }
     }
   }
