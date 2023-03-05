@@ -6,16 +6,17 @@ const typeDefs = gql`
     username: String!
     email: String! 
     password: String!
-    foods: [Food]
-    savedFoods: [bookmarkedFoods]
+    savedFood:[Food]
   }
+ 
 
-
-  type Food { fdcId: Int
-    description: String
+  type Food { 
+    fdcId: ID!
+    description: String!
     dataType: String
     publicationDate: String
-    foodNutrients: [FoodNutrients] }
+    foodNutrients: [FoodNutrients] 
+  }
 
     type FoodNutrients {
       number: String
@@ -33,31 +34,26 @@ const typeDefs = gql`
    
 
   type Query {
-    foods: [Food]
-    foodById( fdcId: String): Food
+    me: User
+    savedFood: [Food]
+    foods(description: String): [Food]!
+    foodById( fdcId: ID): Food
     foodByName(description: String): Food
     nutrients: [FoodNutrients]
-    nutrient(name: String, amount: Int, unitName: String): FoodNutrient
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
 		login(email: String!, password: String!): Auth
-    addFood(fdcId: String!, description: String!, dataType: String, publicationDate: String, foodNutrients: [String ]): User
-    removeFood(fdcId: String!, description: String!, dataType: String!, publicationDate: String!, foodNutrients: [String ]!): User
-    updateUserFoods(foods: [fdcId]!): User
+    savedFood(fdcId: ID!, description: String!, dataType: String, publicationDate: String): User
+    removeFood(fdcId: ID!, description: String!, dataType: String!, publicationDate: String!): User
+     
     removeUser(_id: ID!): User
 
 
-  // type Mutation {
-  //  addFood(fdcId: Int!,
-  //    description: String!,
-  //    dataType: String!,
-  //    publicationDate: String!,
-  //    foodCode: String,
-  //    nbdNumber: String,
-  //    foodNutrients: [FoodNutrients]!): Food!
+   
   }
+   
 `;
 
 module.exports = typeDefs;

@@ -22,12 +22,7 @@ const userSchema = new Schema({
 
     minlength: 5,
   },
-  foods: [
-    {
-      type: String,
-      trim: true,
-    },
-  ],
+   
     // set savedBooks to be an array of data that adheres to the bookSchema
     savedFood: [foodSchema],
     // set this to use virtual below
