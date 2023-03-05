@@ -6,17 +6,17 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import { changeClassName } from "./Helper/changeClassName";
 import { useState } from "react";
-import { useQuery } from '@apollo/client';
-import { QUERY_ME } from './utils/queries';
+// import { useQuery } from '@apollo/client';
+// import { QUERY_ME } from './utils/queries';
  //import { QUERY_ALL_FOODS } from './utils/queries'
 
  
 function App() {
   const [popUp, setPopUp] = useState(false);
-const {loading, error, data } = useQuery(QUERY_ME );
-if (loading) return null;
-if (error) return 'Error: ' + error;
-console.log(data)
+// const {loading, error, data } = useQuery(QUERY_ME );
+// if (loading) return null;
+// if (error) return 'Error: ' + error;
+// console.log(data)
   return (
  
     <changeClassName.Provider value={{ popUp, setPopUp }}>
