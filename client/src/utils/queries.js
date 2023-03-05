@@ -12,8 +12,18 @@ export const QUERY_ME = gql`
         description: String
         dataType: String
         publicationDate: String
-        foodNutrients: [FoodNutrients]
+    
       }
     }
   }
 `;
+// export const QUERY_ALL_FOODS = gql`
+// query Query($description: String) {
+//   foods(description: $description) {
+//     fdcId
+//     description
+//   }
+// }
+// `
+
+//   foodNutrients: [FoodNutrients] --> threw an error on line 15

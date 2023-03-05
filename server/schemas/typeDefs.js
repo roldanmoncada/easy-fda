@@ -12,7 +12,7 @@ const typeDefs = gql`
 
   type Food { 
     fdcId: ID!
-    description: String
+    description: String!
     dataType: String
     publicationDate: String
     foodNutrients: [FoodNutrients] 
@@ -36,11 +36,10 @@ const typeDefs = gql`
   type Query {
     me: User
     savedFood: [Food]
-    foods: [Food]
+    foods(description: String): [Food]!
     foodById( fdcId: ID): Food
     foodByName(description: String): Food
     nutrients: [FoodNutrients]
-    nutrient(name: String, amount: Int, unitName: String): FoodNutrients
   }
 
   type Mutation {

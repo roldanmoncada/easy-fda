@@ -4,6 +4,7 @@ const path = require('path');
 
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
+const cors=require("cors");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -11,6 +12,14 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
 });
+
+const corsOptions ={
+   origin:'*', 
+   credentials:true,            //access-control-allow-credentials:true
+   optionSuccessStatus:200,
+}
+
+app.use(cors(corsOptions)) // Use this after the variable declaration
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

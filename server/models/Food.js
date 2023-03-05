@@ -13,17 +13,20 @@ const foodSchema = new Schema({
   },
   dataType: {
     type: String,
-    required: true,
-    unique: true,
+    //required: true,
+    required: false,
+    // unique: true,
   },
   publicationDate: {
     type: String,
-    required: true,
-    unique: true,
+    //required: true,
+    required: false,
+   // unique: true,
   },
   foodCode: {
     type: String,
-    required: true,
+    //required: true,
+    required: false,
     unique: true,
   },
   nbdNumber: {

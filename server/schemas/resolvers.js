@@ -1,14 +1,32 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Food } = require('../models');
 const { signToken } = require('../utils/auth');
+const fetch = require("node-fetch");
 
 const resolvers = {
   Query: {
-    foods: async () => {
-      return Food.find();
+    foods: async (_, { description }) => {
+      const response = await fetch(`https://api.nal.usda.gov/fdc/v1/search?api_key=blRyZDRgqeBVA3sGp7KTJdcUD1U38l754oWn9CbZ&query=${description}`)
+      const data = await response.json();
+      return data.foods.map(food => ({
+        fdcId: food.fdcId,
+        description: food.description,
+        dataType: food.dataType,
+        publicationDate: food.publicationDate,
+        foodNutrients: food.foodNutrients.map(nutrient => ({
+          number: nutrient.number,
+          name: nutrient.name,
+          amount: nutrient.amount,
+          unitName: nutrient.unitName,
+          derivationCode: nutrient.derivationCode,
+          derivationDescription: nutrient.derivationDescription
+        }))
+      }))
     },
 
     foodById: async (parent, { foodId }) => {
+      const { description } = Food.description
+      const response = await fetch(`https://api.nal.usda.gov/fdc/v1/search?api_key=blRyZDRgqeBVA3sGp7KTJdcUD1U38l754oWn9CbZ&query=${description}`)
       return Food.findOne({ _id: foodId });
     },
     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
@@ -71,7 +89,7 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: { savedFood: foodData } }, // savedFood would be part of the User model
+          { $push: { savedFoods: foodData } }, // savedFoods would be part of the User model
           { new: true }
         );
 
