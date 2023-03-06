@@ -12,9 +12,9 @@ const Home = () => {
   ////----------------LogIn--------------//////
 
   const [formState1, setFormState1] = useState({ email: "", password: "" });
-  const [login, { data1 }] = useMutation(LOGIN_USER);
+  const [login, { error }] = useMutation(LOGIN_USER);
 
-  console.log({ data1 });
+  // console.log({ data1 });
   // update state based on form input changes
   const handleChangeLogIn = (event) => {
     const { name, value } = event.target;
@@ -52,7 +52,7 @@ const Home = () => {
     email: "",
     password: "",
   });
-  const [addProfile, { data }] = useMutation(ADD_PROFILE);
+  const [addProfile] = useMutation(ADD_PROFILE);
 
   // update state based on form input changes
   const handleChangeSignIn = (event) => {
@@ -150,124 +150,125 @@ const Home = () => {
             </span>
             <div className="form-box login " id="login">
               <h2>Login</h2>
-              {data1 && (
-                <form onSubmit={handleFormSubmitLogin}>
-                  <div className="input-box">
-                    <span className="icon">
-                      <i className="fas fa-envelope"></i>
+              {/* {data1 && ( */}
+              <form onSubmit={handleFormSubmitLogin}>
+                <div className="input-box">
+                  <span className="icon">
+                    <i className="fas fa-envelope"></i>
+                  </span>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formState1.email}
+                    onChange={handleChangeLogIn}
+                    required
+                  />
+                  <label>Email</label>
+                </div>
+                <div className="input-box">
+                  <span className="icon">
+                    <i className="fas fa-lock"></i>
+                  </span>
+                  <input
+                    type="password"
+                    name="password"
+                    value={formState1.password}
+                    onChange={handleChangeLogIn}
+                    required
+                  />
+                  <label>Password</label>
+                </div>
+                <div className="remember-forgot">
+                  <label htmlFor="">
+                    <input type="checkbox" />
+                    Remember me
+                  </label>
+                  <a href="/">Forgot Password?</a>
+                </div>
+                <button type="submit" className="btn">
+                  Login
+                </button>
+                <div className="login-register">
+                  <p>
+                    Don't have an account?
+                    <span
+                      onClick={
+                        ((e) => {
+                          e.stopPropagation();
+                        },
+                        handleClick)
+                      }
+                      className="register-link">
+                      &nbsp; Register
                     </span>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formState1.email}
-                      onChange={handleChangeLogIn}
-                      required
-                    />
-                    <label>Email</label>
-                  </div>
-                  <div className="input-box">
-                    <span className="icon">
-                      <i className="fas fa-lock"></i>
-                    </span>
-                    <input
-                      type="password"
-                      name="password"
-                      value={formState1.password}
-                      onChange={handleChangeLogIn}
-                      required
-                    />
-                    <label>Password</label>
-                  </div>
-                  <div className="remember-forgot">
-                    <label htmlFor="">
-                      <input type="checkbox" />
-                      Remember me
-                    </label>
-                    <a href="/">Forgot Password?</a>
-                  </div>
-                  <button type="submit" className="btn">
-                    Login
-                  </button>
-                  <div className="login-register">
-                    <p>
-                      Don't have an account?
-                      <span
-                        onClick={
-                          ((e) => {
-                            e.stopPropagation();
-                          },
-                          handleClick)
-                        }
-                        className="register-link">
-                        &nbsp; Register
-                      </span>
-                    </p>
-                  </div>
-                </form>
-              )}
+                  </p>
+                </div>
+              </form>
+              {/* )} */}
+              {error && <div>Login failed</div>}
             </div>
             {/* ----------Register-------- */}
             <div className="  form-box register">
               <h2>Registration</h2>
-              {data && (
-                <form onSubmit={handleFormSubmitSignup}>
-                  <div className="input-box">
-                    <span className="icon">
-                      <i className="fas fa-user"></i>
+              {/* {data && ( */}
+              <form onSubmit={handleFormSubmitSignup}>
+                <div className="input-box">
+                  <span className="icon">
+                    <i className="fas fa-user"></i>
+                  </span>
+                  <input
+                    name="username"
+                    type="text"
+                    value={formState.username}
+                    onChange={handleChangeSignIn}
+                    required
+                  />
+                  <label>Username</label>
+                </div>
+                <div className="input-box">
+                  <span className="icon">
+                    <i className="fas fa-envelope"></i>
+                  </span>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formState.email}
+                    onChange={handleChangeSignIn}
+                    required
+                  />
+                  <label>Email</label>
+                </div>
+                <div className="input-box">
+                  <span className="icon">
+                    <i className="fas fa-lock"></i>
+                  </span>
+                  <input
+                    type="password"
+                    name="password"
+                    value={formState.password}
+                    onChange={handleChangeSignIn}
+                    required
+                  />
+                  <label>Password</label>
+                </div>
+                <div className="remember-forgot">
+                  <label htmlFor="">
+                    <input type="checkbox" />I agree to the terms & conditions
+                  </label>
+                </div>
+                <button type="submit" className="btn">
+                  Register
+                </button>
+                <div className="login-register">
+                  <p>
+                    Already have an account?
+                    <span onClick={handleClick} className="login-link">
+                      &nbsp; Login
                     </span>
-                    <input
-                      name="username"
-                      type="text"
-                      value={formState.username}
-                      onChange={handleChangeSignIn}
-                      required
-                    />
-                    <label>Username</label>
-                  </div>
-                  <div className="input-box">
-                    <span className="icon">
-                      <i className="fas fa-envelope"></i>
-                    </span>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formState.email}
-                      onChange={handleChangeSignIn}
-                      required
-                    />
-                    <label>Email</label>
-                  </div>
-                  <div className="input-box">
-                    <span className="icon">
-                      <i className="fas fa-lock"></i>
-                    </span>
-                    <input
-                      type="password"
-                      name="password"
-                      value={formState.password}
-                      onChange={handleChangeSignIn}
-                      required
-                    />
-                    <label>Password</label>
-                  </div>
-                  <div className="remember-forgot">
-                    <label htmlFor="">
-                      <input type="checkbox" />I agree to the terms & conditions
-                    </label>
-                  </div>
-                  <button type="submit" className="btn">
-                    Register
-                  </button>
-                  <div className="login-register">
-                    <p>
-                      Already have an account?
-                      <span onClick={handleClick} className="login-link">
-                        &nbsp; Login
-                      </span>
-                    </p>
-                  </div>
-                </form>
-              )}
+                  </p>
+                </div>
+              </form>
+              {/* )} */}
             </div>
           </div>
         </motion.div>

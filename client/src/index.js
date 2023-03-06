@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import { onError } from "apollo-link-error";
-import { ApolloLink } from "apollo-link";
+// import { onError } from "apollo-link-error";
+// import { ApolloLink } from "apollo-link";
 // import { QUERY_ALL_FOODS } from "./utils/queries";
 
 import App from "./App";
@@ -19,16 +19,16 @@ const httpLink = createHttpLink({
   uri: "/graphql",
 });
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors) {
-    console.log("graphQLErrors", graphQLErrors);
-  }
-  if (networkError) {
-    console.log("networkError", networkError);
-  }
-});
+// const errorLink = onError(({ graphQLErrors, networkError }) => {
+//   if (graphQLErrors) {
+//     console.log("graphQLErrors", graphQLErrors);
+//   }
+//   if (networkError) {
+//     console.log("networkError", networkError);
+//   }
+// });
 
-const link = ApolloLink.from([errorLink, httpLink]);
+// const link = ApolloLink.from([errorLink, httpLink]);
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
