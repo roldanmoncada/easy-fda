@@ -12,7 +12,7 @@ const Home = () => {
   ////----------------LogIn--------------//////
 
   const [formState1, setFormState1] = useState({ email: "", password: "" });
-  const [login, { error }] = useMutation(LOGIN_USER);
+  const [loginUser, { error }] = useMutation(LOGIN_USER);
 
   // console.log({ data1 });
   // update state based on form input changes
@@ -30,10 +30,10 @@ const Home = () => {
     event.preventDefault();
     console.log(formState1);
     try {
-      const { data1 } = await login({
+      const { data1 } = await loginUser({
         variables: { ...formState1 },
       });
-
+  console.log({ data1 });
       Auth.login(data1.login.token);
     } catch (e) {
       console.error(e);

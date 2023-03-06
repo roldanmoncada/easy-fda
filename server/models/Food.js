@@ -41,7 +41,7 @@ const foodSchema = new Schema({
   servingSize: {
     //required: true,
     required: false,
-    unique: true,
+   // unique: true,
   },
   // nbdNumber: {
   //   type: String,

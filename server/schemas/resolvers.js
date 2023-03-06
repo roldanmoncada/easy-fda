@@ -67,6 +67,8 @@ const resolvers = {
       }
     },
     login: async (parent, { email, password }) => {
+      try {
+      console.log("login: ", email, password);
       const user = await User.findOne({ email });
 
       if (!user) {
@@ -80,8 +82,13 @@ const resolvers = {
       }
 
       const token = signToken(user);
-      return { token, user };
-    },
+      return { token, user }
+    }catch (e){
+      console.error("login :", e); 
+      throw e;
+    }
+    
+  },
 
     // Add a third argument to the resolver to access data in our `context`
     // addFood: async (parent, { userId, food }) => {
