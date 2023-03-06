@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const QUERY_ME = gql`
   {
@@ -12,7 +12,6 @@ export const QUERY_ME = gql`
         description: String
         dataType: String
         publicationDate: String
-    
       }
     }
   }
@@ -27,3 +26,13 @@ export const QUERY_ME = gql`
 // `
 
 //   foodNutrients: [FoodNutrients] --> threw an error on line 15
+
+export const QUERY_ALL_FOODS = gql`
+  query {
+    foods(description: $description) {
+      description
+      fdcId
+      dataType
+    }
+  }
+`;
