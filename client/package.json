@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3001",
+
+
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -41,6 +43,8 @@
     "react-router-dom": "^6.8.2",
     "react-scripts": "^5.0.1",
     "sweetalert2": "^11.7.3",
-    "web-vitals": "^3.1.1"
+    "web-vitals": "^3.1.1",
+    "animate.css": "^4.1.1",
+    "sweetalert2-react-content": "^5.0.7"
   }
 }

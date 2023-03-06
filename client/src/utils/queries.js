@@ -1,3 +1,4 @@
+
 const { ApolloClient, InMemoryCache, gql } = require('@apollo/client');
 
 const client = new ApolloClient({
@@ -23,10 +24,26 @@ const GET_FOOD_BY_NAME = gql`
         name
         amount
         unitName
+
+import { gql } from "@apollo/client";
+
+export const QUERY_ME = gql`
+  {
+    me {
+      _id
+      username
+      email
+      password
+      savedFood {
+        fdcId: Int
+        description: String
+        dataType: String
+        publicationDate: String
       }
     }
   }
 `;
+
 
 client.query({
   query: GET_FOOD_BY_NAME,
@@ -34,3 +51,24 @@ client.query({
 })
   .then(result => console.log(result))
   .catch(error => console.error(error));
+  
+// export const QUERY_ALL_FOODS = gql`
+// query Query($description: String) {
+//   foods(description: $description) {
+//     fdcId
+//     description
+//   }
+// }
+// `
+
+//   foodNutrients: [FoodNutrients] --> threw an error on line 15
+
+export const QUERY_ALL_FOODS = gql`
+  query {
+    foods(description: $description) {
+      description
+      fdcId
+      dataType
+    }
+  }
+`;

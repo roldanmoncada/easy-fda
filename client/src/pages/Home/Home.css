@@ -8,14 +8,7 @@
   width: 100%;
   min-height: 100vh;
   height: auto;
-  /* background-image: linear-gradient(
-      to right top,
-      #bed1ee,
-      #a2d9ee,
-      #94dedb,
-      #a5dfbc,
-      #cada9d
-    ); */
+
   background-color: #0d98ba;
   display: flex;
   justify-content: center;

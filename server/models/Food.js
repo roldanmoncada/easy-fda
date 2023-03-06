@@ -13,6 +13,7 @@ const foodSchema = new Schema({
   },
   dataType: {
     type: String,
+
     required: true,
   },
   foodClass: {
@@ -22,9 +23,15 @@ const foodSchema = new Schema({
   publicationDate: {
     type: String,
     required: true,
+
+    //required: true,
+    required: false,
+    // unique: true,
   },
+
   brandOwner: {
     type: String,
+
     required: true,
   },
   brandName: {
@@ -32,6 +39,16 @@ const foodSchema = new Schema({
     required: true,
   },
   servingSize: {
+    //required: true,
+    required: false,
+    unique: true,
+  },
+  // nbdNumber: {
+  //   type: String,
+  //   required: false,
+  //   //unique: true,
+  // },
+  foodNutrients: {
     type: String,
     required: true,
   },

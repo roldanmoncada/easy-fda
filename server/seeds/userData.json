@@ -1,0 +1,32 @@
+[
+  
+    {
+      "username": "dave",
+      "email": "daves@email.com",
+      "password": "dave123",
+      "savedFood": {
+        "description": "apple",
+        "fdcId":"454004",
+        "dataType": "Branded",
+        "publicationDate":"2019-04-01",
+        "foodCode": "867824000001"
+      }
+       
+   },
+   {
+    "username": "dan",
+    "email": "dans@email.com",
+    "password": "dan123",
+    "savedFood":  {
+      "description": "banana",
+      "fdcId": "2012128",
+      "dataType": "Branded",
+      "publicationDate": "2021-10-28",
+      "foodCode": "016459200441"
+    }
+
+     
+ }
+  
+   
+]
