@@ -5,7 +5,7 @@ import About from "../About/About";
 const Footer = () => {
   return (
     <>
-      <section className="footer">
+      <footer className="footer">
         <div className="social">
           <a
             href="https://twytter-redo.herokuapp.com/"
@@ -15,7 +15,7 @@ const Footer = () => {
             <i className="fa-solid fa-crow"></i>
           </a>
           <a
-            href="https://github.com/roldanmoncada/twytter"
+            href="https://github.com/roldanmoncada/easy-fda"
             target="_blank"
             rel="noreferrer"
           >
@@ -39,7 +39,7 @@ const Footer = () => {
           </li>
         </ul>
         <p className="copyright">Easy-FDA 2021 @ 2023</p>
-      </section>
+      </footer>
     </>
   );
 };
