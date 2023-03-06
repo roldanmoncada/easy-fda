@@ -1,4 +1,5 @@
 const { Schema } = require("mongoose");
+const { foodNutrientsSchema } = require('./FoodNutrients')
 
 const foodSchema = new Schema({
   fdcId: {
@@ -9,39 +10,42 @@ const foodSchema = new Schema({
   description: {
     type: String,
     required: true,
-    unique: true,
   },
   dataType: {
     type: String,
     required: true,
-    unique: true,
+  },
+  foodClass: {
+    type: String,
+    required: true,
   },
   publicationDate: {
     type: String,
     required: true,
-    unique: true,
   },
-  foodCode: {
+  brandOwner: {
     type: String,
     required: true,
-    unique: true,
   },
-  nbdNumber: {
+  brandName: {
     type: String,
-    required: false,
-    unique: true,
+    required: true,
+  },
+  servingSize: {
+    type: String,
+    required: true,
+  },
+  servingSizeUnit: {
+    type: String,
+    required: true,
+  },
+  ingredients: {
+    type: String,
+    required: true,
   },
   foodNutrients: {
-    type: String,
-    required: false,
-    unique: true,
+    foodNutrientsSchema,
   },
-  foodNutrients: [
-    {
-      type: String,
-      required: true,
-    },
-  ],
 });
 
 module.exports = { foodSchema };

@@ -24,24 +24,38 @@ const typeDefs = gql`
     foodByName(description: String!): Food
   }
 
+  type FoodByName { 
+    fdcId: ID!
+    description: String!
+    dataType: String!
+    foodClass: String!
+    publicationDate: String!
+    brandOwner: String!
+    brandName: String!
+    servingSize: String!
+    servingSizeUnit: String!
+    ingredients: String!
+    foodNutrients: [FoodNutrients]!
+  }
+
   type Food { 
     fdcId: ID!
     description: String!
-    dataType: String
-    foodClass: String
-    publicationDate: String
-    brandOwner: String
-    brandName: String
-    servingSize: Float
-    servingSizeUnit: String
+    dataType: String!
+    foodClass: String!
+    publicationDate: String!
+    brandOwner: String!
+    brandName: String!
+    servingSize: String!
+    servingSizeUnit: String!
     ingredients: String!
-    foodNutrients: [FoodNutrients] 
+    foodNutrients: [FoodNutrients]!
   }
 
     type FoodNutrients {
-      number: String
-      name: String
-      amount: Int
+      nutrientId: String
+      nutrientName: String
+      nutrientNumber: Int
       unitName: String   
     }
 
