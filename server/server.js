@@ -1,4 +1,5 @@
 const express = require("express");
+const morgan = require("morgan");
 const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
 
@@ -20,7 +21,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions)); // Use this after the variable declaration
-
+app.use(morgan("tiny"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 

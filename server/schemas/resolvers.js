@@ -1,32 +1,36 @@
-const { AuthenticationError } = require('apollo-server-express');
-const { User, Food } = require('../models');
-const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require("apollo-server-express");
+const { User, Food } = require("../models");
+const { signToken } = require("../utils/auth");
 const fetch = require("node-fetch");
 
 const resolvers = {
   Query: {
     foods: async (_, { description }) => {
-      const response = await fetch(`https://api.nal.usda.gov/fdc/v1/search?api_key=blRyZDRgqeBVA3sGp7KTJdcUD1U38l754oWn9CbZ&query=${description}`)
+      const response = await fetch(
+        `https://api.nal.usda.gov/fdc/v1/search?api_key=blRyZDRgqeBVA3sGp7KTJdcUD1U38l754oWn9CbZ&query=${description}`
+      );
       const data = await response.json();
-      return data.foods.map(food => ({
+      return data.foods.map((food) => ({
         fdcId: food.fdcId,
         description: food.description,
         dataType: food.dataType,
         publicationDate: food.publicationDate,
-        foodNutrients: food.foodNutrients.map(nutrient => ({
+        foodNutrients: food.foodNutrients.map((nutrient) => ({
           number: nutrient.number,
           name: nutrient.name,
           amount: nutrient.amount,
           unitName: nutrient.unitName,
           derivationCode: nutrient.derivationCode,
-          derivationDescription: nutrient.derivationDescription
-        }))
-      }))
+          derivationDescription: nutrient.derivationDescription,
+        })),
+      }));
     },
 
     foodById: async (parent, { foodId }) => {
-      const { description } = Food.description
-      const response = await fetch(`https://api.nal.usda.gov/fdc/v1/search?api_key=blRyZDRgqeBVA3sGp7KTJdcUD1U38l754oWn9CbZ&query=${description}`)
+      const { description } = Food.description;
+      const response = await fetch(
+        `https://api.nal.usda.gov/fdc/v1/search?api_key=blRyZDRgqeBVA3sGp7KTJdcUD1U38l754oWn9CbZ&query=${description}`
+      );
       return Food.findOne({ _id: foodId });
     },
     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
@@ -34,28 +38,34 @@ const resolvers = {
       if (context.user) {
         return User.findOne({ _id: context.user._id });
       }
-      throw new AuthenticationError('You need to be logged in!');
-  }
-},
+      throw new AuthenticationError("You need to be logged in!");
+    },
+  },
 
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
-      const token = signToken(user);
+      try {
+        console.log(username, email, password)
+        const user = await User.create({ username, email, password });
+        const token = signToken(user);
 
-      return { token, user };
+        return { token, user };
+      } catch (e) {
+        console.error("addUser :", e); //defensive programming
+        throw e;
+      }
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError('No profile with this email found!');
+        throw new AuthenticationError("No profile with this email found!");
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError('Incorrect password!');
+        throw new AuthenticationError("Incorrect password!");
       }
 
       const token = signToken(user);
@@ -98,7 +108,7 @@ const resolvers = {
 
       throw new AuthenticationError("You need to be logged in!");
     },
-},
+  },
 };
 
 module.exports = resolvers;

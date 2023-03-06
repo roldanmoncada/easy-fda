@@ -23,9 +23,9 @@ const userSchema = new Schema(
       minlength: 5,
     },
 
-    // set savedBooks to be an array of data that adheres to the bookSchema
-    savedFood: [foodSchema],
-    // set this to use virtual below
+    // // set savedBooks to be an array of data that adheres to the bookSchema
+    // savedFood: [foodSchema],
+    // // set this to use virtual below
   },
   {
     toJSON: {

@@ -29,11 +29,11 @@ const foodSchema = new Schema({
     required: false,
     unique: true,
   },
-  nbdNumber: {
-    type: String,
-    required: false,
-    unique: true,
-  },
+  // nbdNumber: {
+  //   type: String,
+  //   required: false,
+  //   //unique: true,
+  // },
   foodNutrients: {
     type: String,
     required: false,
