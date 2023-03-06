@@ -5,37 +5,49 @@ const fetch = require("node-fetch");
 
 const resolvers = {
   Query: {
-    foods: async (_, { description }) => {
-      const response = await fetch(`https://api.nal.usda.gov/fdc/v1/search?api_key=blRyZDRgqeBVA3sGp7KTJdcUD1U38l754oWn9CbZ&query=${description}`)
+    foods: async (_, args) => {
+      const { query, dataType, pageNumber, pageSize, sortBy, sortOrder } = args;
+      const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=blRyZDRgqeBVA3sGp7KTJdcUD1U38l754oWn9CbZ&query=${query}&dataType=${dataType}&pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`)
       const data = await response.json();
-      return data.foods.map(food => ({
-        fdcId: food.fdcId,
-        description: food.description,
-        dataType: food.dataType,
-        publicationDate: food.publicationDate,
-        foodNutrients: food.foodNutrients.map(nutrient => ({
-          number: nutrient.number,
-          name: nutrient.name,
-          amount: nutrient.amount,
-          unitName: nutrient.unitName,
-          derivationCode: nutrient.derivationCode,
-          derivationDescription: nutrient.derivationDescription
-        }))
-      }))
+      return data.foods ?data.foods: [];
+      
+      // .map(food => ({
+      //   fdcId: food.fdcId,
+      //   description: food.description,
+      //   dataType: food.dataType,
+      //   publicationDate: food.publicationDate,
+      //   foodNutrients: food.foodNutrients.map(nutrient => ({
+      //     number: nutrient.number,
+      //     name: nutrient.name,
+      //     amount: nutrient.amount,
+      //     unitName: nutrient.unitName,
+      //     derivationCode: nutrient.derivationCode,
+      //     derivationDescription: nutrient.derivationDescription
+      //   }))
+      // }))
     },
 
-    foodById: async (parent, { foodId }) => {
-      const { description } = Food.description
-      const response = await fetch(`https://api.nal.usda.gov/fdc/v1/search?api_key=blRyZDRgqeBVA3sGp7KTJdcUD1U38l754oWn9CbZ&query=${description}`)
-      return Food.findOne({ _id: foodId });
+    foodById: async (parent, { args }) => {
+      const { fdcId } = args
+      const response = await fetch(`https://api.nal.usda.gov/fdc/v1/food/${fdcId}?api_key=blRyZDRgqeBVA3sGp7KTJdcUD1U38l754oWn9CbZ`)
+      const data = await response.json();
+      return data;
     },
+   
+      foodByName: async (parent, { description }) => {
+    const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=blRyZDRgqeBVA3sGp7KTJdcUD1U38l754oWn9CbZ&query=${description}`);
+    const data = await response.json();
+    return data.foods[0];
+  },
     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
     me: async (parent, args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError('You need to be logged in!');
-  }
+  },
+
+
 },
 
   Mutation: {
