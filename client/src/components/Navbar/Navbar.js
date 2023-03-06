@@ -1,6 +1,7 @@
 import { React, useContext, useState } from "react";
 import "./Navbar.css";
 import { changeClassName } from "../../Helper/changeClassName";
+import About from "../About/About";
 
 import Auth from "../../utils/auth";
 
@@ -37,6 +38,30 @@ const Navbar = () => {
 
       <ul className={toogleNav}>
         <li>
+
+          <a href="/" className="nav-links">
+            <i className=" fa-solid fa-house-user"></i>HOME
+          </a>
+        </li>
+        <li>
+          <a href="/Dashboard" className="nav-links">
+            <i className=" fa-solid fa-users-gear"></i>Dashboard
+          </a>
+        </li> 
+        <li>
+          <a href="#/" className="nav-links" onClick={About}>
+            <i className=" fa-solid fa-circle-info"></i>ABOUT
+          </a>
+        </li>
+
+        <li>
+          <a href="/Contact" className="nav-links">
+            <i className=" fa-solid fa-address-book"></i>CONTACT
+          </a>
+        </li>
+
+        <li>
+
           <a href="/Content" className="nav-links">
             <i className=" fa-solid fa-address-book"></i>CONTENT
           </a>
