@@ -1,6 +1,7 @@
 import { React, useContext, useState } from "react";
 import "./Navbar.css";
 import { changeClassName } from "../../Helper/changeClassName";
+import About from "../About/About";
 
 const Navbar = () => {
   const [classIcon, setIcon] = useState(false);
@@ -42,6 +43,17 @@ const Navbar = () => {
         <li>
           <a href="/Dashboard" className="nav-links">
             <i className=" fa-solid fa-users-gear"></i>Dashboard
+          </a>
+        </li> 
+        <li>
+          <a href="#/" className="nav-links" onClick={About}>
+            <i className=" fa-solid fa-circle-info"></i>ABOUT
+          </a>
+        </li>
+
+        <li>
+          <a href="/Contact" className="nav-links">
+            <i className=" fa-solid fa-address-book"></i>CONTACT
           </a>
         </li>
 
