@@ -6,7 +6,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-const GET_FOOD_BY_NAME = gql`
+export const GET_FOOD_BY_NAME = gql`
   query($description: String!) {
     foodByName(description: $description) {
       fdcId
@@ -25,7 +25,16 @@ const GET_FOOD_BY_NAME = gql`
         amount
         unitName
 
-import { gql } from "@apollo/client";
+      }
+    }`
+
+ 
+client.query({
+  query: GET_FOOD_BY_NAME,
+  variables: { description: 'banana' },
+})
+  .then(result => console.log(result))
+  .catch(error => console.error(error));
 
 export const QUERY_ME = gql`
   {
@@ -45,12 +54,6 @@ export const QUERY_ME = gql`
 `;
 
 
-client.query({
-  query: GET_FOOD_BY_NAME,
-  variables: { description: 'banana' },
-})
-  .then(result => console.log(result))
-  .catch(error => console.error(error));
   
 // export const QUERY_ALL_FOODS = gql`
 // query Query($description: String) {
@@ -63,12 +66,26 @@ client.query({
 
 //   foodNutrients: [FoodNutrients] --> threw an error on line 15
 
+// export const QUERY_ALL_FOODS = gql`
+//   query {
+//     foods(description: $description) {
+//       description
+//       fdcId
+//       dataType
+//     }
+//   }
+// `;
 export const QUERY_ALL_FOODS = gql`
-  query {
-    foods(description: $description) {
-      description
-      fdcId
-      dataType
-    }
+query ($query: String) {
+  foods(query: $query) {
+    fdcId
+    description
   }
-`;
+}`
+
+client.query({
+  query: QUERY_ALL_FOODS,
+  variables: { query: 'food' },
+})
+  .then(result => console.log(result))
+  .catch(error => console.error(error));
