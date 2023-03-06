@@ -6,41 +6,65 @@ const typeDefs = gql`
     username: String!
     email: String! 
     password: String!
-    savedFood:[Food]
+    savedFood:Food
   }
  
+  type Query {
+    me: User
+    savedFood: [Food]
+    foods(
+      query: String
+      dataType: String
+      pageNumber: Int
+      pageSize: Int
+      sortBy: String
+      sortOrder: String
+      ): [Food]
+    foodById(fdcId: ID!): Food
+    foodByName(description: String!): Food
+  }
+
+  type FoodByName { 
+    fdcId: ID!
+    description: String!
+    dataType: String!
+    foodClass: String!
+    publicationDate: String!
+    brandOwner: String!
+    brandName: String!
+    servingSize: String!
+    servingSizeUnit: String!
+    ingredients: String!
+    foodNutrients: [FoodNutrients]!
+  }
 
   type Food { 
     fdcId: ID!
     description: String!
-    dataType: String
-    publicationDate: String
-    foodNutrients: [FoodNutrients] 
+    dataType: String!
+    foodClass: String!
+    publicationDate: String!
+    brandOwner: String!
+    brandName: String!
+    servingSize: String!
+    servingSizeUnit: String!
+    ingredients: String!
+    foodNutrients: [FoodNutrients]!
   }
 
     type FoodNutrients {
-      number: String
-      name: String
-      amount: Int
+      nutrientId: String
+      nutrientName: String
+      nutrientNumber: Int
       unitName: String   
-      derivationCode: String
-      derivationDescription: String
     }
+
     type Auth {
       token: ID!
       user: User
     }
    
    
-
-  type Query {
-    me: User
-    savedFood: [Food]
-    foods(description: String): [Food]!
-    foodById( fdcId: ID): Food
-    foodByName(description: String): Food
-    nutrients: [FoodNutrients]
-  }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
