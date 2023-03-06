@@ -7,9 +7,10 @@ const resolvers = {
   Query: {
 
     foods: async (_, args) => {
-      const { query, dataType, pageNumber, pageSize, sortBy, sortOrder } = args;
+      const { query, dataType = "", pageNumber = "", pageSize = "", sortBy = "", sortOrder = "" } = args;
       const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=blRyZDRgqeBVA3sGp7KTJdcUD1U38l754oWn9CbZ&query=${query}&dataType=${dataType}&pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`)
       const data = await response.json();
+      console.log("Food data: ", data)
       return data.foods ?data.foods: [];
       
       // .map(food => ({

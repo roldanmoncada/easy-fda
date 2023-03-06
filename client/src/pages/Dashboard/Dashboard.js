@@ -1,7 +1,12 @@
 import { React, useState } from "react";
 
+//import { useQuery } from "@apollo/client";
+//import { QUERY_ME } from './utils/queries';
+//import { QUERY_ALL_FOODS } from "../../utils/queries";
 import "./Dashboard.css";
 import Searchbox from "../../components/Searchbox/Searchbox";
+ 
+
 
 const Dashboard = () => {
   const [close, setClose] = useState(false);
@@ -31,7 +36,11 @@ const Dashboard = () => {
 
   let toogleClose = close ? "close" : "open";
   let toogleActive = active ? "act" : " ";
-
+  // const { loading, error, data } = useQuery(QUERY_ALL_FOODS, {variables: {query: "food"}});
+  // if (loading) return null;
+  // if (error) return "Error: " + error;
+  // console.log(data);
+  
   return (
     <div className={`dashboardContainer ${toogleDark}`}>
       <div className="flexContainer">
