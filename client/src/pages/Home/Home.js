@@ -30,11 +30,11 @@ const Home = () => {
     event.preventDefault();
     console.log(formState1);
     try {
-      const { data1 } = await loginUser({
+      const { data } = await loginUser({
         variables: { ...formState1 },
       });
-  console.log({ data1 });
-      Auth.login(data1.login.token);
+  console.log({ data });
+      Auth.login(data.login.token);
     } catch (e) {
       console.error(e);
     }
