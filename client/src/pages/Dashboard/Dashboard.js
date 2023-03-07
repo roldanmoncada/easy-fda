@@ -1,11 +1,17 @@
 import { React, useState } from "react";
 
-//import { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 //import { QUERY_ME } from './utils/queries';
-//import { QUERY_ALL_FOODS } from "../../utils/queries";
+import {   QUERY_FOOD_BY_NAME } from "../../utils/queries";
 import "./Dashboard.css";
 import Searchbox from "../../components/Searchbox/Searchbox";
+
 import Auth from "../../utils/auth";
+
+ 
+
+ 
+
 
 const Dashboard = () => {
   const [close, setClose] = useState(false);
@@ -35,10 +41,25 @@ const Dashboard = () => {
 
   let toogleClose = close ? "close" : "open";
   let toogleActive = active ? "act" : " ";
-  // const { loading, error, data } = useQuery(QUERY_ALL_FOODS, {variables: {query: "food"}});
+  // client.query({
+  //   query: QUERY_ALL_FOODS,
+  //   variables: { query: 'food' },
+  // })
+  //   .then(result => console.log(result))
+  //   .catch(error => console.error(error));
+  
+  // const { loading, error, data } = useQuery(QUERY_ALL_FOODS, {variables: {query: "foods"}});
   // if (loading) return null;
   // if (error) return "Error: " + error;
   // console.log(data);
+
+
+
+  const { loading, error, data } = useQuery
+  (QUERY_FOOD_BY_NAME, {variables: {description: "banana"}});
+  if (loading) return null;
+  if (error) return "Error: " + error;
+  console.log(data);
 
   return (
     <div className={`dashboardContainer ${toogleDark}`}>
