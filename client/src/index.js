@@ -47,11 +47,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-// const [popUp, setPopUp] = useState(false);
-//   const { loading, error, data } = useQuery(QUERY_ALL_FOODS);
-//   if (loading) return null;
-//   if (error) return "Error: " + error;
-//   console.log(data);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
