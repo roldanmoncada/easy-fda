@@ -12,7 +12,7 @@ const typeDefs = gql`
   type Query {
     me: User
     savedFood: [Food]
-    foods(
+    getFoods(
       query: String
       dataType: String
       pageNumber: Int
