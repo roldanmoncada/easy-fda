@@ -24,7 +24,7 @@ const typeDefs = gql`
     foodByName(description: String!): Food
   }
 
-  type FoodByName { 
+  input FoodByName { 
     fdcId: ID!
     description: String!
     dataType: String!
@@ -35,7 +35,7 @@ const typeDefs = gql`
     servingSize: String!
     servingSizeUnit: String!
     ingredients: String!
-    foodNutrients: [FoodNutrients]!
+    
   }
 
   type Food { 
@@ -69,8 +69,8 @@ const typeDefs = gql`
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
 		login(email: String!, password: String!): Auth
-    savedFood(fdcId: ID!, description: String!, dataType: String, publicationDate: String): User
-    removeFood(fdcId: ID!, description: String!, dataType: String!, publicationDate: String!): User
+    saveFood(food: FoodByName): User
+    removeFood(fdcId: ID!): User
      
     removeUser(_id: ID!): User
 
@@ -79,5 +79,7 @@ const typeDefs = gql`
   }
    
 `;
+// saveFood(fdcId: ID!, description: String!, dataType: String, publicationDate: String): User
 
+//foodNutrients: [FoodNutrients]! ---> removed from FoodByName
 module.exports = typeDefs;
