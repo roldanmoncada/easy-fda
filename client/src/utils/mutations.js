@@ -25,9 +25,22 @@ export const ADD_PROFILE = gql`
   }
 `;
 
-// export const SAVE_FOOD = gql`
-//   mutation savedFood($foodData: FoodInput!) {
-//     savedFood($foodData: FoodInput!) {
+export const REMOVE_FOOD = gql`mutation removeFood($fdcId: ID!) {
+  removeFood(fdcId: $fdcId) {
+    username
+  }
+}`
+
+ 
+export const SAVE_FOOD = gql`
+mutation saveFood($food: FoodByName) {
+  saveFood(food: $food) {
+    username
+  }
+}`
+
+//   mutation saveFood($food: FoodByName!) {
+//     savedFood(food: FoodInput!) {
 //       _id
 //       username
 //       email

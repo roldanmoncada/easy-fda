@@ -42,17 +42,21 @@ const resolvers = {
     const data = await response.json();
     return data.foods[0];
   },
+  
     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
-    me: async (parent, args, context) => {
-      if (context.user) {
-        return User.findOne({ _id: context.user._id });
-      }
-
-      throw new AuthenticationError('You need to be logged in!');
-  },
+    
+  me: async (parent, args, context) => {
+    if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id })
+        .select('-__v -password')
+        return userData;
+    }
+    throw new AuthenticationError('Not logged in');
+}
 
 
 }, 
+
 
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
@@ -104,21 +108,21 @@ const resolvers = {
     //     }
     //   );
     // },
-    removeUser: async (parent, { userId }) => {
-      return User.findOneAndDelete({ _id: userId });
+    removeUser: async (parent, { _id }) => {
+      return User.findOneAndDelete({ _id: _id });
     },
-    removeFood: async (parent, { userId, food }) => {
+    removeFood: async (parent, { fdcId }, context) => {
       return User.findOneAndUpdate(
-        { _id: userId },
-        { $pull: { foods: food } },
+        { _id: context.user._id },
+        { $pull: { savedFood: {fdcId: fdcId } }}, //could be done in dot notation too
         { new: true }
       );
     },
-    savedFood: async (_parent, { foodData }, context) => {
+    saveFood: async (_parent, { food }, context) => {
       if (context.user) {
         const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: { savedFoods: foodData } }, // savedFoods would be part of the User model
+          { $push: { savedFood: food } }, // savedFoods would be part of the User model
           { new: true }
         );
 
