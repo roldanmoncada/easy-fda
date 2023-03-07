@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import Auth from "../../utils/auth";
-import { React, useState, useContext } from "react";
+import { React, useState, useContext, useEffect } from "react";
 import "./Home.css";
 import { changeClassName } from "../../Helper/changeClassName";
 import { motion } from "framer-motion";
@@ -90,7 +90,7 @@ const Home = () => {
   const [changeActive, setActive] = useState(false);
   const { popUp, setPopUp } = useContext(changeClassName);
 
-  const renderImage = () => {
+  const renderImage = (e) => {
     const Images = [
       { image: "./images/background.jpg" },
       { image: "./images/background1.jpg" },
@@ -102,9 +102,11 @@ const Home = () => {
 
     return Images[randomImageIndex].image;
   };
+  const [randomImage, setRandomImage] = useState(renderImage());
+  const [randomImage1, setRandomImage1] = useState(renderImage());
 
   function handleClick1(e) {
-    e.stopPropagation();
+    e.preventDefault();
     setPopUp((popUp) => !popUp);
   }
 
@@ -113,12 +115,19 @@ const Home = () => {
     setActive((changeActive) => !changeActive);
   }
 
+  useEffect(() => {
+    setRandomImage(renderImage());
+    setRandomImage1(renderImage());
+  }, []);
+
   let toogleActive = changeActive ? "active" : "inactive ";
 
   return (
     <div className="homeContainer">
       <div className="homeIntroduction">
-        <div className="introduction">
+        <div
+          className="introduction"
+          style={{ backgroundImage: `url(${require(`${randomImage1}`)})` }}>
           <h1>Easy-FDA</h1>
           <div className="descriptionContainer">
             <p>
@@ -139,7 +148,7 @@ const Home = () => {
         </div>
         <motion.div
           className="logIn"
-          style={{ backgroundImage: `url(${require(`${renderImage()}`)})` }}
+          style={{ backgroundImage: `url(${require(`${randomImage}`)})` }}
           animate={{ y: ["-5px", "5px", "-5px"] }}
           transition={{ y: { duration: 3, repeat: Infinity } }}>
           <div
