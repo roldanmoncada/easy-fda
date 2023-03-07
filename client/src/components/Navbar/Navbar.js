@@ -50,8 +50,11 @@ const Navbar = () => {
               </a>
             </li>
             <li>
-              <span className="nav-links btnLogin" onClickCapture={Auth.logout}>
-                LogOut
+              <span
+                style={{ fontSize: "15px" }}
+                className="nav-links btnLogin"
+                onClickCapture={Auth.logout}>
+                LOGOUT
               </span>
             </li>
           </>
