@@ -1,17 +1,13 @@
 import { React, useState } from "react";
 
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 //import { QUERY_ME } from './utils/queries';
-import {   QUERY_FOOD_BY_NAME } from "../../utils/queries";
+import { QUERY_FOOD_BY_NAME } from "../../utils/queries";
+import { REMOVE_FOOD } from "../../utils/mutations";
 import "./Dashboard.css";
 import Searchbox from "../../components/Searchbox/Searchbox";
 
 import Auth from "../../utils/auth";
-
- 
-
- 
-
 
 const Dashboard = () => {
   const [close, setClose] = useState(false);
@@ -47,19 +43,23 @@ const Dashboard = () => {
   // })
   //   .then(result => console.log(result))
   //   .catch(error => console.error(error));
-  
+
   // const { loading, error, data } = useQuery(QUERY_ALL_FOODS, {variables: {query: "foods"}});
   // if (loading) return null;
   // if (error) return "Error: " + error;
   // console.log(data);
 
-
-
-  const { loading, error, data } = useQuery
-  (QUERY_FOOD_BY_NAME, {variables: {description: "banana"}});
-  if (loading) return null;
-  if (error) return "Error: " + error;
-  console.log(data);
+  // const { loading, error, data } = useQuery
+  // (QUERY_FOOD_BY_NAME, {variables: {description: "banana"}});
+  // if (loading) return null;
+  // if (error) return "Error: " + error;
+  // console.log(data);
+  
+  // const [removeFood, { loading, error, data }] = useMutation(REMOVE_FOOD);
+  // removeFood({ variables: { fdcId: "2012128" } });
+  // if (loading) return null;
+  // if (error) return "Error: " + error;
+  // console.log(data);
 
   return (
     <div className={`dashboardContainer ${toogleDark}`}>
@@ -114,11 +114,13 @@ const Dashboard = () => {
           <div className="top">
             <i
               onClick={handleClick}
-              className="fa-solid fa-bars iconDashboard"></i>
+              className="fa-solid fa-bars iconDashboard"
+            ></i>
             <div onClick={handleClick2}>
               <div
                 onClick={handleClick1}
-                className={`toggle-btn ${toogleActive} `}>
+                className={`toggle-btn ${toogleActive} `}
+              >
                 <div className="inner-circle"></div>
               </div>
             </div>
