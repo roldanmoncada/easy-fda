@@ -3,6 +3,11 @@ import { React, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 //import { QUERY_ME } from './utils/queries';
 import { QUERY_FOOD_BY_NAME } from "../../utils/queries";
+
+
+import { searchFoods } from "../../utils/api";
+
+
 import { REMOVE_FOOD } from "../../utils/mutations";
 import "./Dashboard.css";
 import Searchbox from "../../components/Searchbox/Searchbox";
@@ -16,6 +21,9 @@ const Dashboard = () => {
   const [dark1, setDark1] = useState(false);
   const [dark2, setDark2] = useState(false);
   const [dark3, setDark3] = useState(false);
+
+  const [searchInput, setSearchInput] = useState("");
+  // const [searchedFood, setSearchedFood] = useState([]);
 
   function handleClick() {
     setClose((close) => !close);
@@ -49,6 +57,33 @@ const Dashboard = () => {
   // if (error) return "Error: " + error;
   // console.log(data);
 
+
+  const handleFormSubmitInput = async (e) => {
+    e.preventDefault();
+
+    if (!searchInput) {
+      return false;
+    }
+
+    try {
+      const response = await searchFoods(searchInput);
+
+      if (!response.ok) {
+        throw new Error("something went wrong!");
+      }
+
+      const items = await response.json();
+
+      // const foodData = items.map((food) => ({}));
+
+      console.log(items);
+
+      setSearchInput(" ");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   // const { loading, error, data } = useQuery
   // (QUERY_FOOD_BY_NAME, {variables: {description: "banana"}});
   // if (loading) return null;
@@ -60,6 +95,7 @@ const Dashboard = () => {
   // if (loading) return null;
   // if (error) return "Error: " + error;
   // console.log(data);
+
 
   return (
     <div className={`dashboardContainer ${toogleDark}`}>
@@ -125,7 +161,27 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="search-box">
-              <Searchbox />
+              {/* //-----------inputSearch-------------// */}
+
+              <form onSubmit={handleFormSubmitInput}>
+                <div className="input-dashboard">
+                  <span className="icon">
+                    <i className="fas fa-wheat-alt"></i>
+                  </span>
+                  <input
+                    name="searchInput"
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    type="text"
+                    required
+                  />
+                  <label>Search the food</label>
+
+                  <button className="searchBtn">Search </button>
+                </div>
+              </form>
+
+              {/* //-----------input-------------// */}
             </div>
           </div>
           <div className="topInfoContainer">
