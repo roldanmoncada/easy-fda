@@ -33,7 +33,7 @@
 .btnLogin {
   width: 130px;
   height: 40px;
-  vertical-align: middle;
+  /* vertical-align: middle; */
   background: transparent;
   border: solid 1px #fff;
   outline: none;
@@ -41,7 +41,7 @@
   cursor: pointer;
   font-size: 1.1em;
   color: #fff;
-  margin-left: 40px;
+  /* margin-left: 40px; */
   text-align: center;
 }
 
@@ -96,7 +96,7 @@
   .nav-menu {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     background: rgba(255, 255, 255, 0.25);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     backdrop-filter: blur(4px);
@@ -130,6 +130,11 @@
   .menu-icons {
     display: block;
   }
+
+  .btnLogin {
+    width: auto;
+    border: none;
+  }
 }
 
 .fs:hover {
@@ -139,6 +144,7 @@
 .iconContainer {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .fs {

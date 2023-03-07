@@ -5,8 +5,7 @@ import { React, useState } from "react";
 //import { QUERY_ALL_FOODS } from "../../utils/queries";
 import "./Dashboard.css";
 import Searchbox from "../../components/Searchbox/Searchbox";
- 
-
+import Auth from "../../utils/auth";
 
 const Dashboard = () => {
   const [close, setClose] = useState(false);
@@ -40,7 +39,7 @@ const Dashboard = () => {
   // if (loading) return null;
   // if (error) return "Error: " + error;
   // console.log(data);
-  
+
   return (
     <div className={`dashboardContainer ${toogleDark}`}>
       <div className="flexContainer">
@@ -82,7 +81,9 @@ const Dashboard = () => {
               <li>
                 <a href="/#">
                   <i className="fa-solid fa-right-from-bracket"></i>
-                  <span className="link-name">Logout</span>
+                  <span className="link-name" onClick={Auth.logout}>
+                    Logout
+                  </span>
                 </a>
               </li>
             </ul>

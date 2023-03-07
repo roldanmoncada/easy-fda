@@ -1,9 +1,8 @@
-
-const { ApolloClient, InMemoryCache, gql } = require('@apollo/client');
+const { ApolloClient, InMemoryCache, gql } = require("@apollo/client");
 
 const client = new ApolloClient({
-  uri: 'https://api.nal.usda.gov/fdc/v1/graphql',
-  cache: new InMemoryCache()
+  uri: "https://api.nal.usda.gov/fdc/v1/graphql",
+  cache: new InMemoryCache(),
 });
 
 export const GET_FOOD_BY_NAME = gql`
@@ -26,15 +25,15 @@ export const GET_FOOD_BY_NAME = gql`
         unitName
 
       }
-    }`
+    }`;
 
- 
-client.query({
-  query: GET_FOOD_BY_NAME,
-  variables: { description: 'banana' },
-})
-  .then(result => console.log(result))
-  .catch(error => console.error(error));
+client
+  .query({
+    query: GET_FOOD_BY_NAME,
+    variables: { description: "banana" },
+  })
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error));
 
 export const QUERY_ME = gql`
   {
@@ -53,8 +52,6 @@ export const QUERY_ME = gql`
   }
 `;
 
-
-  
 // export const QUERY_ALL_FOODS = gql`
 // query Query($description: String) {
 //   foods(description: $description) {
@@ -76,16 +73,18 @@ export const QUERY_ME = gql`
 //   }
 // `;
 export const QUERY_ALL_FOODS = gql`
-query ($query: String) {
-  foods(query: $query) {
-    fdcId
-    description
+  query ($query: String) {
+    foods(query: $query) {
+      fdcId
+      description
+    }
   }
-}`
+`;
 
-client.query({
-  query: QUERY_ALL_FOODS,
-  variables: { query: 'food' },
-})
-  .then(result => console.log(result))
-  .catch(error => console.error(error));
+client
+  .query({
+    query: QUERY_ALL_FOODS,
+    variables: { query: "food" },
+  })
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error));
