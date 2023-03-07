@@ -33,7 +33,7 @@ const Home = () => {
       const { data } = await loginUser({
         variables: { ...formState1 },
       });
-  console.log({ data });
+      console.log({ data });
       Auth.login(data.login.token);
     } catch (e) {
       console.error(e);

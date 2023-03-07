@@ -1,10 +1,12 @@
 
+
  const { gql } = require('@apollo/client');
 
 // const client = new ApolloClient({
 //   uri: 'https://api.nal.usda.gov/fdc/v1/graphql',
 //   cache: new InMemoryCache()
 // });
+
 
 // export const GET_FOOD_BY_NAME = gql`
 //   query Query($description: String!) {
@@ -34,9 +36,11 @@
     foodByName(description: $description) {
       fdcId
       description
+
     }
   }`;
   
+
 
 export const QUERY_ME = gql`
   {
@@ -63,6 +67,7 @@ export const QUERY_ME = gql`
 
  
 export const QUERY_ALL_FOODS = gql`
+
 query Query($query: String) {
   getFoods(query: $query) {
     fdcId
@@ -71,3 +76,4 @@ query Query($query: String) {
 }`;
 
  
+

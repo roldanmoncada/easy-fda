@@ -5,6 +5,9 @@ import { useQuery } from "@apollo/client";
 import {   QUERY_FOOD_BY_NAME } from "../../utils/queries";
 import "./Dashboard.css";
 import Searchbox from "../../components/Searchbox/Searchbox";
+
+import Auth from "../../utils/auth";
+
  
 
  
@@ -49,12 +52,15 @@ const Dashboard = () => {
   // if (loading) return null;
   // if (error) return "Error: " + error;
   // console.log(data);
+
+
+
   const { loading, error, data } = useQuery
   (QUERY_FOOD_BY_NAME, {variables: {description: "banana"}});
   if (loading) return null;
   if (error) return "Error: " + error;
   console.log(data);
-  
+
   return (
     <div className={`dashboardContainer ${toogleDark}`}>
       <div className="flexContainer">
@@ -96,7 +102,9 @@ const Dashboard = () => {
               <li>
                 <a href="/#">
                   <i className="fa-solid fa-right-from-bracket"></i>
-                  <span className="link-name">Logout</span>
+                  <span className="link-name" onClick={Auth.logout}>
+                    Logout
+                  </span>
                 </a>
               </li>
             </ul>
