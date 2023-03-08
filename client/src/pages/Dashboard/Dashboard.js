@@ -1,18 +1,31 @@
 import { React, useState } from "react";
-
-import { useQuery, useMutation } from "@apollo/client";
-//import { QUERY_ME } from './utils/queries';
-import { QUERY_FOOD_BY_NAME } from "../../utils/queries";
-
-
-import { searchFoods } from "../../utils/api";
-
-
-import { REMOVE_FOOD } from "../../utils/mutations";
+import gql from 'graphql-tag'
+import Auth from "../../utils/auth";
 import "./Dashboard.css";
 import Searchbox from "../../components/Searchbox/Searchbox";
 
-import Auth from "../../utils/auth";
+import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+//import { QUERY_ME } from './utils/queries';
+
+
+
+// import { SearchFoods } from "../../utils/api";
+
+const QUERY_FOOD_BY_NAME = gql`
+  query Query($description: String!) {
+    foodByName(description: $description) {
+      fdcId
+      description
+
+    }
+  }`;
+
+
+// import { REMOVE_FOOD } from "../../utils/mutations";
+
+
+
+
 
 const Dashboard = () => {
   const [close, setClose] = useState(false);
@@ -23,7 +36,9 @@ const Dashboard = () => {
   const [dark3, setDark3] = useState(false);
 
   const [searchInput, setSearchInput] = useState("");
-  // const [searchedFood, setSearchedFood] = useState([]);
+  const [searchedFood, setSearchedFood] = useState([]);
+
+  const [ foodSearch, { loading, error, data }] = useLazyQuery(QUERY_FOOD_BY_NAME, { onCompleted: (food) => setSearchedFood(food)});
 
   function handleClick() {
     setClose((close) => !close);
@@ -64,24 +79,14 @@ const Dashboard = () => {
     if (!searchInput) {
       return false;
     }
+    foodSearch({ variables: {description: searchInput } })
+    
+    // try {
 
-    try {
-      const response = await searchFoods(searchInput);
-
-      if (!response.ok) {
-        throw new Error("something went wrong!");
-      }
-
-      const items = await response.json();
-
-      // const foodData = items.map((food) => ({}));
-
-      console.log(items);
-
-      setSearchInput(" ");
-    } catch (err) {
-      console.error(err);
-    }
+    //   setSearchInput(" ");
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   // const { loading, error, data } = useQuery
@@ -109,6 +114,9 @@ const Dashboard = () => {
                   <span className="link-name">Home</span>
                 </a>
               </li>
+              <div> 
+      {searchedFood?.foodByName?.description}
+    </div>
               <li>
                 <a href="/#">
                   <i className="fa-solid fa-user"></i>
