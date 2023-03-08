@@ -1,4 +1,6 @@
+
 import { React, useState, useEffect } from "react";
+
 import Auth from "../../utils/auth";
 import "./Dashboard.css";
 import { QUERY_FOOD_BY_NAME, QUERY_ME } from "../../utils/queries";
@@ -143,15 +145,10 @@ const Dashboard = () => {
               <li>
                 <a href="/#">
                   <i className="fa-solid fa-user"></i>
-                  <span className="link-name">UserName</span>
+                  <span className="link-name">{userData?.username}</span>
                 </a>
               </li>
-              <li>
-                <a href="/#">
-                  <i className="fa-solid fa-leaf"></i>
-                  <span className="link-name">Name</span>
-                </a>
-              </li>
+
               <li>
                 <a href="/Content">
                   <i className="fa-solid fa-cloud"></i>
@@ -224,9 +221,11 @@ const Dashboard = () => {
               <p>{searchedFood?.foodByName?.dataType}</p>
               <p>{searchedFood?.foodByName?.brandOwner}</p>
             </div>
+ 
             <button onClick={() => handleSaveFood(saveFood?.food?.fdcId)}>
               Save Food
             </button>
+ 
           </div>
           <div className="bottomInfoContainer">
             <div className="titleBottom">
@@ -234,17 +233,31 @@ const Dashboard = () => {
               <h2>{searchedFood?.foodByName?.description}</h2>
             </div>
             <div className={`tableBottom ${toogleDark3}`}>
-              {searchedFood?.foodByName?.foodNutrients?.map((nutrient) => {
-                return (
-                  <div
-                    key={`${searchedFood?.foodName?.description}-${nutrient.nutrientId}`}
-                  >
-                    {" "}
-                    <div>{nutrient.nutrientName}</div>
-                    <div>{`${nutrient.nutrientNumber} ${nutrient.unitName}`}</div>
-                  </div>
-                );
-              })}
+ 
+              <table className="content-table">
+                <thead>
+                  <tr>
+                    <th>Nutrient Name</th>
+                    <th>Amount</th>
+
+                    <th>Unit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {searchedFood?.foodByName?.foodNutrients?.map((nutrient) => {
+                    return (
+                      <tr
+                        key={`${searchedFood?.foodName?.description}-${nutrient.nutrientId}`}>
+                        {" "}
+                        <td>{nutrient.nutrientName}</td>
+                        <td>{nutrient.nutrientNumber}</td>
+                        <td>{nutrient.unitName}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+ 
             </div>
           </div>
         </section>
