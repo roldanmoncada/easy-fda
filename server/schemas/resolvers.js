@@ -40,7 +40,7 @@ const resolvers = {
       foodByName: async (parent, { query }) => {
     const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=blRyZDRgqeBVA3sGp7KTJdcUD1U38l754oWn9CbZ&query=${query}`);
     const data = await response.json();
-    return data.foods[0];
+    return [data.foods[0]];
   },
   
     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
