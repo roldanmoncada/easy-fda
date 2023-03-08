@@ -131,18 +131,20 @@ const Home = () => {
           <h1>Easy-FDA</h1>
           <div className="descriptionContainer">
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam,
-              autem molestias facere esse obcaecati est nesciunt soluta in quae
-              deleniti repudiandae, nobis, similique dolores expedita atque unde
-              cum a tempora.
+              Currently, anyone can Google a specific ingredient or product, but
+              the search results are general and vast. This can mislead users to
+              sites that are at the top of a search, but do not provide reliable
+              information
             </p>
           </div>
           <div className="descriptionContainer">
             <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-              Aspernatur soluta earum neque eius veniam quasi totam culpa, cum
-              harum error mollitia suscipit accusamus cumque consequatur nihil.
-              Quo doloremque dolorem amet?
+              This app allows users to query the official USDA API for
+              information on a given food and/or ingredient to a food. This app
+              will be available to the general public but can help several
+              specific demographics such as new/expecting parents looking to
+              verify the safety of ingredients in food they are giving their
+              infant.
             </p>
           </div>
         </div>
