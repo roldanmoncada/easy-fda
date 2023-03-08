@@ -1,10 +1,11 @@
 import { React, useState, useEffect } from "react";
 import Auth from "../../utils/auth";
 import "./Dashboard.css";
-import Searchbox from "../../components/Searchbox/Searchbox";
 import { QUERY_FOOD_BY_NAME, QUERY_ME } from "../../utils/queries";
 import { SAVE_FOOD } from "../../utils/mutations";
+import { saveFoodIds, getSavedFoodIds } from "../../utils/localStorage";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+
 //import { QUERY_ME } from './utils/queries';
 
 // import { SearchFoods } from "../../utils/api";
@@ -20,28 +21,28 @@ const Dashboard = () => {
   const [dark3, setDark3] = useState(false);
 
   const [searchInput, setSearchInput] = useState("");
-  const [searchedFood, setSearchedFood] = useState([]); // <- will have getSavedFoodIds as the argument
-  const [savedFood, setSavedFood] = useState([])
+  const [searchedFood, setSearchedFood] = useState([]);
+  const [savedFoodIds, setSavedFoodIds] = useState(getSavedFoodIds());
 
-  const [ saveFood ] = useMutation(SAVE_FOOD);
+  const [saveFood] = useMutation(SAVE_FOOD);
 
-  // useEffect(() => {
-  //   return () => {
-  //     saveFoodId(savedFood)  
-  //   }
-  // })
+  useEffect(() => {
+    return () => {
+      saveFoodIds(savedFoodIds);
+    };
+  });
 
-  const [ foodSearch ] = useLazyQuery(QUERY_FOOD_BY_NAME, { onCompleted: (food) => setSearchedFood(food)});
+  const [foodSearch] = useLazyQuery(QUERY_FOOD_BY_NAME, {
+    onCompleted: (food) => setSearchedFood(food),
+  });
 
   const { data } = useQuery(QUERY_ME);
   const userData = data?.me || {};
 
-  console.log(userData)
-  
+  console.log(userData);
+
   if (!userData?.username) {
-    return (
-      <p>Must be logged in!</p>
-    )
+    return <p>Must be logged in!</p>;
   }
 
   const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -49,11 +50,6 @@ const Dashboard = () => {
   if (!token) {
     return false;
   }
-  
-  
-
-
-
 
   function handleClick() {
     setClose((close) => !close);
@@ -104,28 +100,26 @@ const Dashboard = () => {
   };
 
   const handleSaveFood = async (fdcId) => {
-    const foodToSave = searchedFood.find((food) => food.fdcId === fdcId)
+    const foodToSave = searchedFood.find((food) => food.fdcId === fdcId);
 
     try {
-      await saveFood(
-        {variables: {food: foodToSave}, 
-        update: cache => {
-          const { me } = cache.readQuery({ query: QUERY_ME})
-          console.log(me)
-          console.log(me.savedFood)
-          cache.writeQuery({ query: QUERY_ME, data: {me: {...me, 
-          savedFood: [...me.savedFood, foodToSave]
-        }
-      } 
-    })
-        }
-      }
-      )
-      setSavedFood([...savedFood, foodToSave.fdcId])
+      await saveFood({
+        variables: { food: foodToSave },
+        update: (cache) => {
+          const { me } = cache.readQuery({ query: QUERY_ME });
+          console.log(me);
+          console.log(me.savedFood);
+          cache.writeQuery({
+            query: QUERY_ME,
+            data: { me: { ...me, savedFood: [...me.savedFood, foodToSave] } },
+          });
+        },
+      });
+      setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   // const [removeFood, { loading, error, data }] = useMutation(REMOVE_FOOD);
   // removeFood({ variables: { fdcId: "2012128" } });
@@ -187,11 +181,13 @@ const Dashboard = () => {
           <div className="top">
             <i
               onClick={handleClick}
-              className="fa-solid fa-bars iconDashboard"></i>
+              className="fa-solid fa-bars iconDashboard"
+            ></i>
             <div onClick={handleClick2}>
               <div
                 onClick={handleClick1}
-                className={`toggle-btn ${toogleActive} `}>
+                className={`toggle-btn ${toogleActive} `}
+              >
                 <div className="inner-circle"></div>
               </div>
             </div>
@@ -228,7 +224,9 @@ const Dashboard = () => {
               <p>{searchedFood?.foodByName?.dataType}</p>
               <p>{searchedFood?.foodByName?.brandOwner}</p>
             </div>
-            <button onClick={() => handleSaveFood(saveFood?.food?.fdcId)}>Save Food</button>
+            <button onClick={() => handleSaveFood(saveFood?.food?.fdcId)}>
+              Save Food
+            </button>
           </div>
           <div className="bottomInfoContainer">
             <div className="titleBottom">
@@ -239,7 +237,8 @@ const Dashboard = () => {
               {searchedFood?.foodByName?.foodNutrients?.map((nutrient) => {
                 return (
                   <div
-                    key={`${searchedFood?.foodName?.description}-${nutrient.nutrientId}`}>
+                    key={`${searchedFood?.foodName?.description}-${nutrient.nutrientId}`}
+                  >
                     {" "}
                     <div>{nutrient.nutrientName}</div>
                     <div>{`${nutrient.nutrientNumber} ${nutrient.unitName}`}</div>
