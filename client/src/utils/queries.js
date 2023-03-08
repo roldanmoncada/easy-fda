@@ -36,7 +36,18 @@
     foodByName(description: $description) {
       fdcId
       description
-
+      dataType
+      brandOwner
+      brandName
+      servingSize
+      servingSizeUnit
+      ingredients
+      foodNutrients {
+        nutrientNumber
+        nutrientId
+        nutrientName
+        unitName
+      }
     }
   }`;
   

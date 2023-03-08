@@ -3,22 +3,14 @@ import gql from 'graphql-tag'
 import Auth from "../../utils/auth";
 import "./Dashboard.css";
 import Searchbox from "../../components/Searchbox/Searchbox";
+import { QUERY_FOOD_BY_NAME } from "../../utils/queries";
 
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 //import { QUERY_ME } from './utils/queries';
 
 
 
 // import { SearchFoods } from "../../utils/api";
-
-const QUERY_FOOD_BY_NAME = gql`
-  query Query($description: String!) {
-    foodByName(description: $description) {
-      fdcId
-      description
-
-    }
-  }`;
 
 
 // import { REMOVE_FOOD } from "../../utils/mutations";
@@ -38,7 +30,7 @@ const Dashboard = () => {
   const [searchInput, setSearchInput] = useState("");
   const [searchedFood, setSearchedFood] = useState([]);
 
-  const [ foodSearch, { loading, error, data }] = useLazyQuery(QUERY_FOOD_BY_NAME, { onCompleted: (food) => setSearchedFood(food)});
+  const [ foodSearch ] = useLazyQuery(QUERY_FOOD_BY_NAME, { onCompleted: (food) => setSearchedFood(food)});
 
   function handleClick() {
     setClose((close) => !close);
