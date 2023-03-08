@@ -88,7 +88,7 @@ const Dashboard = () => {
 
   const handleSaveFood = async (fdcId) => {
     const foodToSave = searchedFood.find((food) => food.fdcId === fdcId);
-    saveFoodIds([foodToSave]);
+    saveFoodIds([foodToSave]); // ----searchedFood is an array now, therefore .find is working---
     // try {
     //   await saveFoodIds({
     //     variables: { food: foodToSave },
@@ -105,7 +105,7 @@ const Dashboard = () => {
     //   setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
     // } catch (error) {
     //   console.error(error);
-    // }
+    // }  ---- there seems to be a graphql error in here still, hence commented out
   };
 
   // const [removeFood, { loading, error, data }] = useMutation(REMOVE_FOOD);
