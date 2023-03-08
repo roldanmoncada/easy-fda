@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import Auth from "../../utils/auth";
 import "./Dashboard.css";
 import Searchbox from "../../components/Searchbox/Searchbox";
@@ -22,17 +22,17 @@ const Dashboard = () => {
   const [searchInput, setSearchInput] = useState("");
   const [searchedFood, setSearchedFood] = useState([]);
 
-  const [ foodSearch ] = useLazyQuery(QUERY_FOOD_BY_NAME, { onCompleted: (food) => setSearchedFood(food)});
+  const [foodSearch] = useLazyQuery(QUERY_FOOD_BY_NAME, {
+    onCompleted: (food) => setSearchedFood(food),
+  });
 
   const { data } = useQuery(QUERY_ME);
   const userData = data?.me || {};
 
-  console.log(userData)
-  
+  console.log(userData);
+
   if (!userData?.username) {
-    return (
-      <p>Must be logged in!</p>
-    )
+    return <p>Must be logged in!</p>;
   }
 
   const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -40,11 +40,6 @@ const Dashboard = () => {
   if (!token) {
     return false;
   }
-  
-  
-
-
-
 
   function handleClick() {
     setClose((close) => !close);
@@ -116,15 +111,10 @@ const Dashboard = () => {
               <li>
                 <a href="/#">
                   <i className="fa-solid fa-user"></i>
-                  <span className="link-name">UserName</span>
+                  <span className="link-name">{userData?.username}</span>
                 </a>
               </li>
-              <li>
-                <a href="/#">
-                  <i className="fa-solid fa-leaf"></i>
-                  <span className="link-name">Name</span>
-                </a>
-              </li>
+
               <li>
                 <a href="/Content">
                   <i className="fa-solid fa-cloud"></i>
@@ -195,22 +185,6 @@ const Dashboard = () => {
               <p>{searchedFood?.foodByName?.dataType}</p>
               <p>{searchedFood?.foodByName?.brandOwner}</p>
             </div>
-            {/* <div className={`infoContainer1 ${toogleDark1}`}>
-              <h2>Title</h2>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Accusamus ad
-              </p>
-              <p>afsdfads</p>
-            </div>
-            <div className={`infoContainer1 ${toogleDark1}`}>
-              <h2>Title</h2>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Accusamus ad dolorum eius quidem e
-              </p>
-              <p>a12323</p>
-            </div> */}
           </div>
           <div className="bottomInfoContainer">
             <div className="titleBottom">
@@ -218,16 +192,29 @@ const Dashboard = () => {
               <h2>{searchedFood?.foodByName?.description}</h2>
             </div>
             <div className={`tableBottom ${toogleDark3}`}>
-              {searchedFood?.foodByName?.foodNutrients?.map((nutrient) => {
-                return (
-                  <div
-                    key={`${searchedFood?.foodName?.description}-${nutrient.nutrientId}`}>
-                    {" "}
-                    <div>{nutrient.nutrientName}</div>
-                    <div>{`${nutrient.nutrientNumber} ${nutrient.unitName}`}</div>
-                  </div>
-                );
-              })}
+              <table className="content-table">
+                <thead>
+                  <tr>
+                    <th>Nutrient Name</th>
+                    <th>Amount</th>
+
+                    <th>Unit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {searchedFood?.foodByName?.foodNutrients?.map((nutrient) => {
+                    return (
+                      <tr
+                        key={`${searchedFood?.foodName?.description}-${nutrient.nutrientId}`}>
+                        {" "}
+                        <td>{nutrient.nutrientName}</td>
+                        <td>{nutrient.nutrientNumber}</td>
+                        <td>{nutrient.unitName}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           </div>
         </section>
