@@ -4,10 +4,12 @@ import Auth from "../../utils/auth";
 import "./Dashboard.css";
 import Searchbox from "../../components/Searchbox/Searchbox";
 import { QUERY_FOOD_BY_NAME } from "../../utils/queries";
+
 import { useLazyQuery } from "@apollo/client";
 //import { QUERY_ME } from './utils/queries';
 
 // import { SearchFoods } from "../../utils/api";
+
 
 // import { REMOVE_FOOD } from "../../utils/mutations";
 
@@ -22,9 +24,8 @@ const Dashboard = () => {
   const [searchInput, setSearchInput] = useState("");
   const [searchedFood, setSearchedFood] = useState([]);
 
-  const [foodSearch] = useLazyQuery(QUERY_FOOD_BY_NAME, {
-    onCompleted: (food) => setSearchedFood(food),
-  });
+  const [ foodSearch ] = useLazyQuery(QUERY_FOOD_BY_NAME, { onCompleted: (food) => setSearchedFood(food)});
+
 
   function handleClick() {
     setClose((close) => !close);

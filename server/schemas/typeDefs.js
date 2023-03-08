@@ -28,8 +28,6 @@ const typeDefs = gql`
     fdcId: ID!
     description: String!
     dataType: String!
-    foodClass: String!
-    publicationDate: String!
     brandOwner: String!
     brandName: String!
     servingSize: String!
