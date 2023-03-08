@@ -1,10 +1,10 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import Auth from "../../utils/auth";
 import "./Dashboard.css";
 import Searchbox from "../../components/Searchbox/Searchbox";
 import { QUERY_FOOD_BY_NAME, QUERY_ME } from "../../utils/queries";
-
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { SAVE_FOOD } from "../../utils/mutations";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 //import { QUERY_ME } from './utils/queries';
 
 // import { SearchFoods } from "../../utils/api";
@@ -20,7 +20,16 @@ const Dashboard = () => {
   const [dark3, setDark3] = useState(false);
 
   const [searchInput, setSearchInput] = useState("");
-  const [searchedFood, setSearchedFood] = useState([]);
+  const [searchedFood, setSearchedFood] = useState([]); // <- will have getSavedFoodIds as the argument
+  const [savedFood, setSavedFood] = useState([])
+
+  const [ saveFood ] = useMutation(SAVE_FOOD);
+
+  // useEffect(() => {
+  //   return () => {
+  //     saveFoodId(savedFood)  
+  //   }
+  // })
 
   const [ foodSearch ] = useLazyQuery(QUERY_FOOD_BY_NAME, { onCompleted: (food) => setSearchedFood(food)});
 
@@ -93,6 +102,30 @@ const Dashboard = () => {
     //   console.error(err);
     // }
   };
+
+  const handleSaveFood = async (fdcId) => {
+    const foodToSave = searchedFood.find((food) => food.fdcId === fdcId)
+
+    try {
+      await saveFood(
+        {variables: {food: foodToSave}, 
+        update: cache => {
+          const { me } = cache.readQuery({ query: QUERY_ME})
+          console.log(me)
+          console.log(me.savedFood)
+          cache.writeQuery({ query: QUERY_ME, data: {me: {...me, 
+          savedFood: [...me.savedFood, foodToSave]
+        }
+      } 
+    })
+        }
+      }
+      )
+      setSavedFood([...savedFood, foodToSave.fdcId])
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   // const [removeFood, { loading, error, data }] = useMutation(REMOVE_FOOD);
   // removeFood({ variables: { fdcId: "2012128" } });
@@ -195,22 +228,7 @@ const Dashboard = () => {
               <p>{searchedFood?.foodByName?.dataType}</p>
               <p>{searchedFood?.foodByName?.brandOwner}</p>
             </div>
-            {/* <div className={`infoContainer1 ${toogleDark1}`}>
-              <h2>Title</h2>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Accusamus ad
-              </p>
-              <p>afsdfads</p>
-            </div>
-            <div className={`infoContainer1 ${toogleDark1}`}>
-              <h2>Title</h2>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Accusamus ad dolorum eius quidem e
-              </p>
-              <p>a12323</p>
-            </div> */}
+            <button onClick={() => handleSaveFood(saveFood?.food?.fdcId)}>Save Food</button>
           </div>
           <div className="bottomInfoContainer">
             <div className="titleBottom">
