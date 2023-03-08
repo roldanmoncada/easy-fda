@@ -35,7 +35,7 @@ const Dashboard = () => {
   });
 
   const [foodSearch] = useLazyQuery(QUERY_FOOD_BY_NAME, {
-    onCompleted: (food) => setSearchedFood(food),
+    onCompleted: (food) => setSearchedFood(food.foodByName),
   });
 
   const { data } = useQuery(QUERY_ME);
@@ -73,17 +73,7 @@ const Dashboard = () => {
 
   let toogleClose = close ? "close" : "open";
   let toogleActive = active ? "act" : " ";
-  // client.query({
-  //   query: QUERY_ALL_FOODS,
-  //   variables: { query: 'food' },
-  // })
-  //   .then(result => console.log(result))
-  //   .catch(error => console.error(error));
-
-  // const { loading, error, data } = useQuery(QUERY_ALL_FOODS, {variables: {query: "foods"}});
-  // if (loading) return null;
-  // if (error) return "Error: " + error;
-  // console.log(data);
+   
 
   const handleFormSubmitInput = async (e) => {
     e.preventDefault();
@@ -93,34 +83,29 @@ const Dashboard = () => {
     }
     foodSearch({ variables: { query: searchInput } });
 
-    // try {
-
-    //   setSearchInput(" ");
-    // } catch (err) {
-    //   console.error(err);
-    // }
+     
   };
 
   const handleSaveFood = async (fdcId) => {
     const foodToSave = searchedFood.find((food) => food.fdcId === fdcId);
-
-    try {
-      await saveFood({
-        variables: { food: foodToSave },
-        update: (cache) => {
-          const { me } = cache.readQuery({ query: QUERY_ME });
-          console.log(me);
-          console.log(me.savedFood);
-          cache.writeQuery({
-            query: QUERY_ME,
-            data: { me: { ...me, savedFood: [...me.savedFood, foodToSave] } },
-          });
-        },
-      });
-      setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
-    } catch (error) {
-      console.error(error);
-    }
+    saveFoodIds([foodToSave]);
+    // try {
+    //   await saveFoodIds({
+    //     variables: { food: foodToSave },
+    //     update: (cache) => {
+    //       const { me } = cache.readQuery({ query: QUERY_ME });
+    //       console.log(me);
+    //       console.log(me.savedFood);
+    //       cache.writeQuery({
+    //         query: QUERY_ME,
+    //         data: { me: { ...me, savedFood: [...me.savedFood, foodToSave] } },
+    //       });
+    //     },
+    //   });
+    //   setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   // const [removeFood, { loading, error, data }] = useMutation(REMOVE_FOOD);
@@ -221,8 +206,8 @@ const Dashboard = () => {
               <p>{searchedFood?.foodByName?.dataType}</p>
               <p>{searchedFood?.foodByName?.brandOwner}</p>
             </div>
- 
-            <button onClick={() => handleSaveFood(saveFood?.food?.fdcId)}>
+ {/*  following button is working */}
+            <button onClick={() => handleSaveFood(searchedFood[0].fdcId)}>
               Save Food
             </button>
  
