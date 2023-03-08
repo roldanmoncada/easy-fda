@@ -1,12 +1,9 @@
-
-
- const { gql } = require('@apollo/client');
+const { gql } = require("@apollo/client");
 
 // const client = new ApolloClient({
 //   uri: 'https://api.nal.usda.gov/fdc/v1/graphql',
 //   cache: new InMemoryCache()
 // });
-
 
 // export const GET_FOOD_BY_NAME = gql`
 //   query Query($description: String!) {
@@ -31,8 +28,9 @@
 //     }
 //   }
 //   `;
-  export const QUERY_FOOD_BY_NAME = gql`
-  query Query($description: String!) {
+
+export const QUERY_FOOD_BY_NAME = gql`
+  query FoodByName($description: String!) {
     foodByName(description: $description) {
       fdcId
       description
@@ -49,9 +47,8 @@
         unitName
       }
     }
-  }`;
-  
-
+  }
+`;
 
 export const QUERY_ME = gql`
   {
@@ -70,21 +67,13 @@ export const QUERY_ME = gql`
   }
 `;
 
-
-  
- 
-
 //   foodNutrients: [FoodNutrients] --> threw an error on line 15
 
- 
 export const QUERY_ALL_FOODS = gql`
-
-query Query($query: String) {
-  getFoods(query: $query) {
-    fdcId
-    description
+  query Query($query: String) {
+    getFoods(query: $query) {
+      fdcId
+      description
+    }
   }
-}`;
-
- 
-
+`;

@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 import Auth from "../../utils/auth";
 import "./Dashboard.css";
 import Searchbox from "../../components/Searchbox/Searchbox";
@@ -8,16 +8,10 @@ import { QUERY_FOOD_BY_NAME } from "../../utils/queries";
 import { useLazyQuery } from "@apollo/client";
 //import { QUERY_ME } from './utils/queries';
 
-
-
 // import { SearchFoods } from "../../utils/api";
 
 
 // import { REMOVE_FOOD } from "../../utils/mutations";
-
-
-
-
 
 const Dashboard = () => {
   const [close, setClose] = useState(false);
@@ -31,6 +25,7 @@ const Dashboard = () => {
   const [searchedFood, setSearchedFood] = useState([]);
 
   const [ foodSearch ] = useLazyQuery(QUERY_FOOD_BY_NAME, { onCompleted: (food) => setSearchedFood(food)});
+
 
   function handleClick() {
     setClose((close) => !close);
@@ -64,15 +59,14 @@ const Dashboard = () => {
   // if (error) return "Error: " + error;
   // console.log(data);
 
-
   const handleFormSubmitInput = async (e) => {
     e.preventDefault();
 
     if (!searchInput) {
       return false;
     }
-    foodSearch({ variables: {description: searchInput } })
-    
+    foodSearch({ variables: { description: searchInput } });
+
     // try {
 
     //   setSearchInput(" ");
@@ -81,18 +75,11 @@ const Dashboard = () => {
     // }
   };
 
-  // const { loading, error, data } = useQuery
-  // (QUERY_FOOD_BY_NAME, {variables: {description: "banana"}});
-  // if (loading) return null;
-  // if (error) return "Error: " + error;
-  // console.log(data);
-  
   // const [removeFood, { loading, error, data }] = useMutation(REMOVE_FOOD);
   // removeFood({ variables: { fdcId: "2012128" } });
   // if (loading) return null;
   // if (error) return "Error: " + error;
   // console.log(data);
-
 
   return (
     <div className={`dashboardContainer ${toogleDark}`}>
@@ -106,9 +93,7 @@ const Dashboard = () => {
                   <span className="link-name">Home</span>
                 </a>
               </li>
-              <div> 
-      {searchedFood?.foodByName?.description}
-    </div>
+              <div></div>
               <li>
                 <a href="/#">
                   <i className="fa-solid fa-user"></i>
@@ -122,7 +107,7 @@ const Dashboard = () => {
                 </a>
               </li>
               <li>
-                <a href="/#">
+                <a href="/Content">
                   <i className="fa-solid fa-cloud"></i>
                   <span className="link-name">Content</span>
                 </a>
@@ -150,13 +135,11 @@ const Dashboard = () => {
           <div className="top">
             <i
               onClick={handleClick}
-              className="fa-solid fa-bars iconDashboard"
-            ></i>
+              className="fa-solid fa-bars iconDashboard"></i>
             <div onClick={handleClick2}>
               <div
                 onClick={handleClick1}
-                className={`toggle-btn ${toogleActive} `}
-              >
+                className={`toggle-btn ${toogleActive} `}>
                 <div className="inner-circle"></div>
               </div>
             </div>
@@ -189,14 +172,11 @@ const Dashboard = () => {
               <i className="fa-solid fa-gauge"></i> <h2> Dashboard</h2>
             </div>
             <div className={`infoContainer1 ${toogleDark1}`}>
-              <h2>Title</h2>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Accusamus ad dolorum eius quidem e
-              </p>
-              <p>afsdfads</p>
+              <h2>{searchedFood?.foodByName?.description}</h2>
+              <p>{searchedFood?.foodByName?.dataType}</p>
+              <p>{searchedFood?.foodByName?.brandOwner}</p>
             </div>
-            <div className={`infoContainer1 ${toogleDark1}`}>
+            {/* <div className={`infoContainer1 ${toogleDark1}`}>
               <h2>Title</h2>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -211,13 +191,25 @@ const Dashboard = () => {
                 Accusamus ad dolorum eius quidem e
               </p>
               <p>a12323</p>
-            </div>
+            </div> */}
           </div>
           <div className="bottomInfoContainer">
             <div className="titleBottom">
-              <i className="fa-solid fa-seedling"></i> <h2>Title</h2>
+              <i className="fa-solid fa-seedling"></i>{" "}
+              <h2>{searchedFood?.foodByName?.description}</h2>
             </div>
-            <div className={`tableBottom ${toogleDark3}`}></div>
+            <div className={`tableBottom ${toogleDark3}`}>
+              {searchedFood?.foodByName?.foodNutrients?.map((nutrient) => {
+                return (
+                  <div
+                    key={`${searchedFood?.foodName?.description}-${nutrient.nutrientId}`}>
+                    {" "}
+                    <div>{nutrient.nutrientName}</div>
+                    <div>{`${nutrient.nutrientNumber} ${nutrient.unitName}`}</div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </section>
       </div>
