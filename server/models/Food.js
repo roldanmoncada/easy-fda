@@ -58,7 +58,7 @@ const foodSchema = new Schema({
   },
   ingredients: {
     type: String,
-    required: true,
+    required: false,
   },
   foodNutrients: {
     foodNutrientsSchema,

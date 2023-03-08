@@ -6,7 +6,7 @@ const typeDefs = gql`
     username: String!
     email: String! 
     password: String!
-    savedFood:Food
+    savedFood: Food
   }
  
   type Query {
@@ -21,10 +21,11 @@ const typeDefs = gql`
       sortOrder: String
       ): [Food]
     foodById(fdcId: ID!): Food
-    foodByName(description: String!): Food
+    foodByName(query: String!): Food
   }
 
   input FoodByName { 
+    query: String!
     fdcId: ID!
     description: String!
     dataType: String!
@@ -32,7 +33,7 @@ const typeDefs = gql`
     brandName: String!
     servingSize: String!
     servingSizeUnit: String!
-    ingredients: String!
+    ingredients: String
     
   }
 
@@ -46,7 +47,7 @@ const typeDefs = gql`
     brandName: String!
     servingSize: String!
     servingSizeUnit: String!
-    ingredients: String!
+    ingredients: String
     foodNutrients: [FoodNutrients]!
   }
 

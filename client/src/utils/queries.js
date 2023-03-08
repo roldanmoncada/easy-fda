@@ -30,8 +30,8 @@ const { gql } = require("@apollo/client");
 //   `;
 
 export const QUERY_FOOD_BY_NAME = gql`
-  query FoodByName($description: String!) {
-    foodByName(description: $description) {
+  query FoodByName($query: String!) {
+    foodByName(query: $query) {
       fdcId
       description
       dataType
@@ -51,22 +51,30 @@ export const QUERY_FOOD_BY_NAME = gql`
 `;
 
 export const QUERY_ME = gql`
-  {
-    me {
-      _id
-      username
-      email
-      password
-      savedFood {
-        fdcId: Int
-        description: String
-        dataType: String
-        publicationDate: String
-      }
-    }
+query Me {
+  me {
+    _id
+    username
+    email
+    password
   }
+}
 `;
 
+// {
+  //   me {
+  //     _id
+  //     username
+  //     email
+  //     password
+  //     savedFood {
+  //       fdcId: Int
+  //       description: String
+  //       dataType: String
+  //       publicationDate: String
+  //     }
+  //   }
+  // }
 //   foodNutrients: [FoodNutrients] --> threw an error on line 15
 
 export const QUERY_ALL_FOODS = gql`

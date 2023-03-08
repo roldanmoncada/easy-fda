@@ -1,7 +1,28 @@
 import React from "react";
 import "./Content.css";
+import { REMOVE_FOOD } from "../../utils/mutations"
+import { QUERY_ME } from "../../utils/queries";
+import { useQuery } from "@apollo/client";
+import Auth from "../../utils/auth";
 
 const Content = () => {
+  const { data } = useQuery(QUERY_ME);
+  const userData = data?.me || {};
+
+  console.log(userData)
+  
+  if (!userData?.username) {
+    return (
+      <p>Must be logged in!</p>
+    )
+  }
+
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+  if (!token) {
+    return false;
+  }
+
   return (
     <div className="contentContainer">
       <div className="cardsContainer">
