@@ -37,8 +37,8 @@ const resolvers = {
  
     },
    
-      foodByName: async (parent, { description }) => {
-    const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=blRyZDRgqeBVA3sGp7KTJdcUD1U38l754oWn9CbZ&query=${description}`);
+      foodByName: async (parent, { query }) => {
+    const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=blRyZDRgqeBVA3sGp7KTJdcUD1U38l754oWn9CbZ&query=${query}`);
     const data = await response.json();
     return data.foods[0];
   },
@@ -48,7 +48,7 @@ const resolvers = {
   me: async (parent, args, context) => {
     if (context.user) {
         const userData = await User.findOne({ _id: context.user._id })
-        .select('-__v -password')
+        // .select('-__v -password')
         return userData;
     }
     throw new AuthenticationError('Not logged in');

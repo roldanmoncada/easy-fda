@@ -1,15 +1,13 @@
 import { React, useState } from "react";
-import gql from "graphql-tag";
 import Auth from "../../utils/auth";
 import "./Dashboard.css";
 import Searchbox from "../../components/Searchbox/Searchbox";
-import { QUERY_FOOD_BY_NAME } from "../../utils/queries";
+import { QUERY_FOOD_BY_NAME, QUERY_ME } from "../../utils/queries";
 
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 //import { QUERY_ME } from './utils/queries';
 
 // import { SearchFoods } from "../../utils/api";
-
 
 // import { REMOVE_FOOD } from "../../utils/mutations";
 
@@ -25,6 +23,27 @@ const Dashboard = () => {
   const [searchedFood, setSearchedFood] = useState([]);
 
   const [ foodSearch ] = useLazyQuery(QUERY_FOOD_BY_NAME, { onCompleted: (food) => setSearchedFood(food)});
+
+  const { data } = useQuery(QUERY_ME);
+  const userData = data?.me || {};
+
+  console.log(userData)
+  
+  if (!userData?.username) {
+    return (
+      <p>Must be logged in!</p>
+    )
+  }
+
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+  if (!token) {
+    return false;
+  }
+  
+  
+
+
 
 
   function handleClick() {
@@ -65,7 +84,7 @@ const Dashboard = () => {
     if (!searchInput) {
       return false;
     }
-    foodSearch({ variables: { description: searchInput } });
+    foodSearch({ variables: { query: searchInput } });
 
     // try {
 
