@@ -6,16 +6,17 @@ import { useQuery, useMutation } from "@apollo/client";
 import Auth from "../../utils/auth";
 import { removeFoodId } from "../../utils/localStorage";
 import { motion } from "framer-motion";
+//import { Food } from "../../../../server/models";
 
 const Content = () => {
   const [savedFoodSearch, setSavedFoodSearch] = useState([]);
   const { data } = useQuery(QUERY_ME);
-  const [deleteFood] = useMutation(REMOVE_FOOD);
+  //const [deleteFood] = useMutation(REMOVE_FOOD);
   const userData = data?.me || {};
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    document.title = ` Easy-FDA | Content `;
+    document.title = ` Easy-USDA | Content `;
     const savedFoodStr = localStorage.getItem("saved_food");
     setSavedFoodSearch(!savedFoodStr ? [] : JSON.parse(savedFoodStr));
   }, []);
@@ -28,6 +29,14 @@ const Content = () => {
 
     if (!token) {
       return false;
+    }
+    try {
+      // const { data } = deleteFood({
+      //   variables: {fdcId}
+      // });
+      removeFoodId(fdcId);
+    } catch (err) {
+      console.error(err);
     }
     // try {
     //   await deleteFood({
@@ -56,11 +65,12 @@ const Content = () => {
       initial={{ width: 0 }}
       animate={{ width: "100%" }}
       exit={{ x: 0 }}
-      transition={{ duration: 1 }}>
+      transition={{ duration: 1 }}
+    >
       {savedFoodSearch.map((oneFoodSearch) => {
         return (
           <>
-            <motion.div
+            <div
               layoutTransition={{ duration: 1 }}
               initial={{ opacity: 0.6 }}
               whileHover={{
@@ -74,12 +84,14 @@ const Content = () => {
                 borderRadius: "15px",
                 boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.9)",
               }}
-              className="cardResume">
+              className="cardResume"
+            >
               <div
                 key={`${oneFoodSearch.description}`}
-                className="cardsContainer">
+                className="cardsContainer"
+              >
                 <span className="icon-close xBton">
-                  <i className="fas fa-xmark"></i>
+                  <i className="fas fa-xmark" onClick={()=> handleDeleteFood(savedFoodSearch.fdcId)}></i>
                 </span>
                 <div className="infoContainer1">
                   <motion.h2 Layout="position">
@@ -117,7 +129,7 @@ const Content = () => {
               <div key={`${oneFoodSearch.description}-space`}>
                 &nbsp; &nbsp;
               </div>
-            </motion.div>
+            </div>
           </>
         );
       })}
