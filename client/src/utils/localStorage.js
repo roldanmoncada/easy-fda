@@ -6,12 +6,30 @@ export const getSavedFoodIds = () => {
   return savedFoodIds;
 };
 
-export const saveFoodIds = (foodIdArr) => {
-  if (foodIdArr.length) {
-    localStorage.setItem("saved_food", JSON.stringify(foodIdArr));
-  } else {
-    localStorage.removeItem("saved_food");
+export const saveFoodIds = (foodToSave) => {
+  // if (foodIdArr.length) {
+  if (foodToSave) {
+    const savedFoodLSStr = localStorage.getItem("saved_food");
+    const savedFoodLS = savedFoodLSStr ? JSON.parse(savedFoodLSStr) : [];
+    var existFlag = false;
+    // dedup the repeat searched food
+    for (let i = 0; i < savedFoodLS.length; i++) {
+      const oneFood = savedFoodLS[i];
+      if (oneFood.description === foodToSave.description) {
+        existFlag = true;
+        break;
+      }
+    }
+    if (!existFlag) {
+      savedFoodLS.push(foodToSave);
+      localStorage.setItem("saved_food", JSON.stringify(savedFoodLS));
+    }
   }
+
+  // }
+  // else {
+  //   localStorage.removeItem("saved_food");
+  // }
 };
 
 export const removeFoodId = (fdcId) => {
