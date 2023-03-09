@@ -1,4 +1,3 @@
-
 import { React, useState, useEffect } from "react";
 
 import Auth from "../../utils/auth";
@@ -23,15 +22,19 @@ const Dashboard = () => {
 
   const [searchInput, setSearchInput] = useState("");
   const [searchedFood, setSearchedFood] = useState([]); // <- will have getSavedFoodIds as the argument
-  const [savedFood, setSavedFood] = useState([])
+  const [savedFood, setSavedFood] = useState([]);
 
-  const [ saveFood ] = useMutation(SAVE_FOOD);
+  const [saveFood] = useMutation(SAVE_FOOD);
 
   // useEffect(() => {
   //   return () => {
-  //     saveFoodId(savedFood)  
+  //     saveFoodId(savedFood)
   //   }
   // })
+
+  useEffect(() => {
+    document.title = ` Easy-FDA | Dashboard `;
+  }, []);
 
   const [foodSearch] = useLazyQuery(QUERY_FOOD_BY_NAME, {
     onCompleted: (food) => setSearchedFood(food),
@@ -101,28 +104,26 @@ const Dashboard = () => {
   };
 
   const handleSaveFood = async (fdcId) => {
-    const foodToSave = searchedFood.find((food) => food.fdcId === fdcId)
+    const foodToSave = searchedFood.find((food) => food.fdcId === fdcId);
 
     try {
-      await saveFood(
-        {variables: {food: foodToSave}, 
-        update: cache => {
-          const { me } = cache.readQuery({ query: QUERY_ME})
-          console.log(me)
-          console.log(me.savedFood)
-          cache.writeQuery({ query: QUERY_ME, data: {me: {...me, 
-          savedFood: [...me.savedFood, foodToSave]
-        }
-      } 
-    })
-        }
-      }
-      )
-      setSavedFood([...savedFood, foodToSave.fdcId])
+      await saveFood({
+        variables: { food: foodToSave },
+        update: (cache) => {
+          const { me } = cache.readQuery({ query: QUERY_ME });
+          console.log(me);
+          console.log(me.savedFood);
+          cache.writeQuery({
+            query: QUERY_ME,
+            data: { me: { ...me, savedFood: [...me.savedFood, foodToSave] } },
+          });
+        },
+      });
+      setSavedFood([...savedFood, foodToSave.fdcId]);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   // const [removeFood, { loading, error, data }] = useMutation(REMOVE_FOOD);
   // removeFood({ variables: { fdcId: "2012128" } });
@@ -137,7 +138,7 @@ const Dashboard = () => {
           <div className="menu-items">
             <ul className="nav-links1">
               <li>
-                <a href="/#">
+                <a href="/Dashboard">
                   <i className="fa-solid fa-house"></i>
                   <span className="link-name">Home</span>
                 </a>
@@ -221,8 +222,11 @@ const Dashboard = () => {
               <p>{searchedFood?.foodByName?.brandOwner}</p>
             </div>
 
-            <button onClick={() => handleSaveFood(saveFood?.food?.fdcId)}>Save Food</button>
-
+            <button
+              className="saveBtn"
+              onClick={() => handleSaveFood(saveFood?.food?.fdcId)}>
+              Save Food
+            </button>
           </div>
           <div className="bottomInfoContainer">
             <div className="titleBottom">

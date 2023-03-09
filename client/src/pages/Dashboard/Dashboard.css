@@ -310,3 +310,31 @@ p {
 .content-table tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
 }
+
+.saveBtn {
+  margin-top: 15px;
+  font-size: 10px;
+  width: 100px;
+  background: #5ebe44;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 7px;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  -webkit-transform-duration: 0.3s;
+  transition-duration: 0.3s;
+  transition-property: box-shadow, transform;
+  position: absolute;
+  top: 0;
+  right: 20px;
+}
+
+.saveBtn:hover,
+.saveBtn:focus,
+.saveBtn:active {
+  box-shadow: 0 0 20px rgb(0, 0, 0, 0.5);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
