@@ -88,3 +88,38 @@
   transform: scale(1.2);
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.9);
 }
+
+.cardResume {
+  width: auto;
+  font-family: "Roboto", sans-serif;
+  margin-left: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+  position: relative;
+}
+
+.xBton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 45px;
+  height: 45px;
+  background-color: #162938;
+  font-size: 2em;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom-left-radius: 20px;
+  cursor: pointer;
+  z-index: 1;
+}
