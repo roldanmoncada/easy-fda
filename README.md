@@ -54,34 +54,34 @@ If you have an idea to improve this app, fork the repo, create your branch, comm
 
 Main page is the login screen. If a user doesn't have an account, they can click on either sign up links to be redirected to that page.
 
-![image]()
+![image](./client/public/images/%20home-screen2.png)
 
 At the signup page, users are asked to input 3 fields of information that will pertain to their new EASY-FDA account.
 
-![image]()
+![image](./client/public/images/Home-screen1.png)
 
 Upon creating a valid new account, users are redirected to their dashboard. Here they can access numerous features of the site.
 
-![image]()
+![image](./client/public/images/%20dashboard.png)
 
 Screen for querying a food or ingredient
 
-![image]()
+![image](./client/public/images/%20food-search.png)
 
 Entries of food information from USDA API saved by the user
 
-![image]()
+![image](./client/public/images/saved-search.png)
 
 ABOUT page describing the EASY-FDA web application
 
-![image]()
+![image](./client/public/images/%20about.png)
 
-CONTACT page allowing the user to leave a message and their contact information. Then an reply email will be sent to the user automatically saying their message has been received and will be reviewed.
+CONTACT allowing the user to leave a message and their contact information. Then an reply email will be sent to the user automatically saying their message has been received and will be reviewed.
 
-![image]()
+![image](./client/public/images/contact.png)
 
 When a user signs out, they will be redirected to the login screen where they can choose to log back in!
 
-![image]()
+![image](./client/public/images/%20home-screen1.png)
 
 Thank you for using EASY-FDA!
