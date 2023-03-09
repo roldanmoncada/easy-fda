@@ -92,7 +92,24 @@ const Dashboard = () => {
     const foodToSave = searchedFood.find((food) => food.fdcId === fdcId);
     saveFoodIds(foodToSave);
     // ----searchedFood is an array now, therefore .find is working---
-
+    // try {
+    //   await saveFoodIds({
+    //     variables: { food: foodToSave },
+    //     update: (cache) => {
+    //       const { me } = cache.readQuery({ query: QUERY_ME });
+    //       console.log(me);
+    //       console.log(me.savedFood);
+    //       cache.writeQuery({
+    //         query: QUERY_ME,
+    //         data: { me: { ...me, savedFood: [...me.savedFood, foodToSave] } },
+    //       });
+    //     },
+    //   });
+    //   setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
+    // } catch (error) {
+    //   console.error(error);
+    //  } 
+     
     // try {
     //   const { data } = await saveFood({
     //     variables: { input: foodToSave}
@@ -256,9 +273,9 @@ const Dashboard = () => {
                   {searchedFood.map((nutrient) => {
                     return nutrient.foodNutrients.map((foodNutrient, index) => (
                       <tr key={`${nutrient.description}-${index}`}>
-                        <td>{foodNutrient.nutrientName}</td>
-                        <td>{foodNutrient.nutrientNumber}</td>
-                        <td>{foodNutrient.unitName}</td>
+                        <td key={`${foodNutrient.nutrientId}`}>{foodNutrient.nutrientName}</td>
+                        <td key={`${foodNutrient.nutrientNumber}`}>{foodNutrient.nutrientNumber}</td>
+                        <td key={`${foodNutrient.unitName}`}>{foodNutrient.unitName}</td>
                       </tr>
                     ));
                   })}
