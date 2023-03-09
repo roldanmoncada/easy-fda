@@ -29,7 +29,7 @@ const Navbar = () => {
           <i className="fa-brands fa-nutritionix "></i>
         </div>
         <div className="fs ">
-          <h2>Easy-FDA </h2>
+          <h2>Easy-USDA </h2>
         </div>
       </div>
       <div className="menu-icons">
