@@ -38,7 +38,7 @@ const Footer = () => {
             <a href="/Contact">Terms</a>
           </li>
         </ul>
-        <p className="copyright">Easy-FDA 2021 @ 2023</p>
+        <p className="copyright">Easy-USDA 2021 @ 2023</p>
       </footer>
     </>
   );
