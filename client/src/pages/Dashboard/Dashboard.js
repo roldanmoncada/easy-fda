@@ -26,14 +26,12 @@ const Dashboard = () => {
   const [searchedFood, setSearchedFood] = useState([]);
   const [savedFoodIds, setSavedFoodIds] = useState(getSavedFoodIds());
 
-  const [saveFood] = useMutation(SAVE_FOOD);
-
-  useEffect(() => {
-    return () => {
-      saveFoodIds(savedFoodIds);
-    };
-  });
-
+  // const [saveFood] = useMutation(SAVE_FOOD);
+  // useEffect(() => {
+  //   return () => {
+  //     saveFoodIds(savedFoodIds);
+  //   };
+  // });
   useEffect(() => {
     document.title = ` Easy-FDA | Dashboard `;
   }, []);
@@ -45,12 +43,10 @@ const Dashboard = () => {
   const { data } = useQuery(QUERY_ME);
   const userData = data?.me || {};
 
-
   const { food } = useQuery(QUERY_FOOD_BY_NAME);
   const foodItems = food?.foodByName || {};
 
   //console.log(userData);
-
 
   if (!userData?.username) {
     return <p>Must be logged in!</p>;
@@ -93,9 +89,8 @@ const Dashboard = () => {
   };
 
   const handleSaveFood = async (fdcId) => {
-  
-    const foodToSave = searchedFood.find((food) => food.fdcId === fdcId)
-    saveFoodIds([foodToSave]); 
+    const foodToSave = searchedFood.find((food) => food.fdcId === fdcId);
+    saveFoodIds(foodToSave);
     // ----searchedFood is an array now, therefore .find is working---
 
     // try {
@@ -106,29 +101,25 @@ const Dashboard = () => {
     // } catch  (err) {
     //   console.error(err);
     // }
-    };
-   
- 
-    // try {
-    //   await saveFoodIds({
-    //     variables: { food: foodToSave },
-    //     update: (cache) => {
-    //       const { me } = cache.readQuery({ query: QUERY_ME });
-    //       console.log(me);
-    //       console.log(me.savedFood);
-    //       cache.writeQuery({
-    //         query: QUERY_ME,
-    //         data: { me: { ...me, savedFood: [...me.savedFood, foodToSave] } },
-    //       });
-    //     },
-    //   });
-    //   setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
-    // } catch (error) {
-    //   console.error(error);
-    //  } 
-     
-   
+  };
 
+  // try {
+  //   await saveFoodIds({
+  //     variables: { food: foodToSave },
+  //     update: (cache) => {
+  //       const { me } = cache.readQuery({ query: QUERY_ME });
+  //       console.log(me);
+  //       console.log(me.savedFood);
+  //       cache.writeQuery({
+  //         query: QUERY_ME,
+  //         data: { me: { ...me, savedFood: [...me.savedFood, foodToSave] } },
+  //       });
+  //     },
+  //   });
+  //   setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
+  // } catch (error) {
+  //   console.error(error);
+  //  }
 
   // const [removeFood, { loading, error, data }] = useMutation(REMOVE_FOOD);
   // removeFood({ variables: { fdcId: "2012128" } });
@@ -185,11 +176,13 @@ const Dashboard = () => {
           <div className="top">
             <i
               onClick={handleClick}
-              className="fa-solid fa-bars iconDashboard"></i>
+              className="fa-solid fa-bars iconDashboard"
+            ></i>
             <div onClick={handleClick2}>
               <div
                 onClick={handleClick1}
-                className={`toggle-btn ${toogleActive} `}>
+                className={`toggle-btn ${toogleActive} `}
+              >
                 <div className="inner-circle"></div>
               </div>
             </div>
@@ -230,13 +223,13 @@ const Dashboard = () => {
                 </>
               ))}
             </div>
-            ;
-            {/*  following button is working
-            {/* <button
+            {/*  following button is working */}
+            <button
               className="saveBtn"
-              onClick={() => handleSaveFood(searchedFood[0].fdcId)}>
+              onClick={() => handleSaveFood(searchedFood[0].fdcId)}
+            >
               Save Food
-            </button> */}
+            </button>
           </div>
           <div className="bottomInfoContainer">
             <div className="titleBottom">
@@ -260,12 +253,12 @@ const Dashboard = () => {
                 <tbody>
                   {searchedFood.map((nutrient) => {
                     return nutrient.foodNutrients.map((foodNutrient, index) => (
-                          <tr key={`${nutrient.description}-${index}`}>
-                            <td>{foodNutrient.nutrientName}</td>
-                            <td>{foodNutrient.nutrientNumber}</td>
-                            <td>{foodNutrient.unitName}</td>
-                          </tr>
-                        ));
+                      <tr key={`${nutrient.description}-${index}`}>
+                        <td>{foodNutrient.nutrientName}</td>
+                        <td>{foodNutrient.nutrientNumber}</td>
+                        <td>{foodNutrient.unitName}</td>
+                      </tr>
+                    ));
                   })}
                 </tbody>
               </table>
