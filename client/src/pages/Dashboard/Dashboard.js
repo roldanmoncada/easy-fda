@@ -6,7 +6,7 @@ import { QUERY_FOOD_BY_NAME, QUERY_ME } from "../../utils/queries";
 import { SAVE_FOOD } from "../../utils/mutations";
 import { saveFoodIds, getSavedFoodIds } from "../../utils/localStorage";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-
+import { motion } from "framer-motion";
 //import { QUERY_ME } from './utils/queries';
 
 // import { SearchFoods } from "../../utils/api";
@@ -128,7 +128,12 @@ const Dashboard = () => {
   // console.log(data);
 
   return (
-    <div className={`dashboardContainer ${toogleDark}`}>
+    <motion.div
+      className={`dashboardContainer ${toogleDark}`}
+      initial={{ width: 0 }}
+      animate={{ width: "100%" }}
+      exit={{ x: 0 }}
+      transition={{ duration: 1 }}>
       <div className="flexContainer">
         <aside className={`${toogleClose} ${toogleDark2}`}>
           <div className="menu-items">
@@ -176,13 +181,11 @@ const Dashboard = () => {
           <div className="top">
             <i
               onClick={handleClick}
-              className="fa-solid fa-bars iconDashboard"
-            ></i>
+              className="fa-solid fa-bars iconDashboard"></i>
             <div onClick={handleClick2}>
               <div
                 onClick={handleClick1}
-                className={`toggle-btn ${toogleActive} `}
-              >
+                className={`toggle-btn ${toogleActive} `}>
                 <div className="inner-circle"></div>
               </div>
             </div>
@@ -226,8 +229,7 @@ const Dashboard = () => {
             {/*  following button is working */}
             <button
               className="saveBtn"
-              onClick={() => handleSaveFood(searchedFood[0].fdcId)}
-            >
+              onClick={() => handleSaveFood(searchedFood[0].fdcId)}>
               Save Food
             </button>
           </div>
@@ -266,7 +268,7 @@ const Dashboard = () => {
           </div>
         </section>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
