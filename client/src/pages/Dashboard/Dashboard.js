@@ -97,7 +97,24 @@ const Dashboard = () => {
     const foodToSave = searchedFood.find((food) => food.fdcId === fdcId)
     saveFoodIds([foodToSave]); 
     // ----searchedFood is an array now, therefore .find is working---
-
+    // try {
+    //   await saveFoodIds({
+    //     variables: { food: foodToSave },
+    //     update: (cache) => {
+    //       const { me } = cache.readQuery({ query: QUERY_ME });
+    //       console.log(me);
+    //       console.log(me.savedFood);
+    //       cache.writeQuery({
+    //         query: QUERY_ME,
+    //         data: { me: { ...me, savedFood: [...me.savedFood, foodToSave] } },
+    //       });
+    //     },
+    //   });
+    //   setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
+    // } catch (error) {
+    //   console.error(error);
+    //  } 
+     
     // try {
     //   const { data } = await saveFood({
     //     variables: { input: foodToSave}
@@ -231,12 +248,12 @@ const Dashboard = () => {
               ))}
             </div>
             ;
-            {/*  following button is working
-            {/* <button
+              
+             <button
               className="saveBtn"
               onClick={() => handleSaveFood(searchedFood[0].fdcId)}>
               Save Food
-            </button> */}
+            </button>
           </div>
           <div className="bottomInfoContainer">
             <div className="titleBottom">
