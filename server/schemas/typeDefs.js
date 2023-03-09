@@ -40,13 +40,12 @@ const typeDefs = gql`
   type Food { 
     fdcId: ID!
     description: String!
-    dataType: String!
-    foodClass: String!
-    publicationDate: String!
-    brandOwner: String!
-    brandName: String!
-    servingSize: String!
-    servingSizeUnit: String!
+    dataType: String
+    publicationDate: String
+    brandOwner: String
+    brandName: String
+    servingSize: String
+    servingSizeUnit: String
     ingredients: String
     foodNutrients: [FoodNutrients]!
   }
