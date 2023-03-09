@@ -1,0 +1,160 @@
+.navbarItems {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2rem;
+  padding: 0 30px;
+  /* background-color: #0d98ba; */
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 5px rgba(0, 0, 0, 0.25);
+  width: 95%;
+  height: 90px;
+  border-radius: 10px;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%);
+  font-family: "Roboto", sans-serif;
+  z-index: 3;
+}
+
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .btnLogin:hover {
+  background: #fff;
+  color: black;
+  transition: 0.5s;
+} */
+
+.btnLogin {
+  width: 130px;
+  height: 40px;
+  /* vertical-align: middle; */
+  background: transparent;
+  border: solid 1px #fff;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
+  color: #fff;
+  /* margin-left: 40px; */
+  text-align: center;
+}
+
+.logo {
+  color: #fff;
+  justify-self: start;
+  cursor: pointer;
+}
+
+.iLogo {
+  margin-left: 0.2rem;
+  font-size: 1.6rem;
+}
+.nav-menu {
+  display: grid;
+  grid-template-columns: repeat(6, auto);
+  grid-gap: 10px;
+  list-style: none;
+  text-align: center;
+  justify-content: end;
+}
+.nav-links {
+  text-decoration: none;
+  color: #fff;
+  padding: 0.7rem 1rem;
+  white-space: nowrap;
+}
+.fa-nutritionix {
+  color: #fff;
+}
+
+.nav-links i {
+  padding-right: 10px;
+}
+.nav-links:hover {
+  background-color: #162938;
+  border-radius: 4px;
+  transition: all 0.2s ease-in-out;
+}
+.fa-bars,
+.fa-times {
+  color: #fff;
+}
+.menu-icons {
+  display: none;
+}
+
+@media screen and (max-width: 900px) {
+  .navbarItems {
+    z-index: 99;
+  }
+  .nav-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    border-radius: 13px;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: -110%;
+    align-items: stretch;
+    padding: 80px 0 30px 0;
+    margin: 0;
+    z-index: -2;
+    transition: all 0.4s ease-in-out;
+    font-size: 1.2rem;
+  }
+  .nav-menu.active {
+    left: 0%;
+  }
+
+  .nav-links {
+    display: block;
+    widows: 100%;
+    padding: 2rem 0;
+    color: #222;
+  }
+  .nav-links:hover {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(20px);
+  }
+  .menu-icons {
+    display: block;
+  }
+
+  .btnLogin {
+    width: auto;
+    border: none;
+  }
+}
+
+.fs:hover {
+  transform: translateX(15px);
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fs {
+  margin-left: 20px;
+  color: #fff;
+  font-family: "Roboto", sans-serif;
+  transition: 0.5s;
+}
+@media screen and (max-width: 1030px) {
+  .navbarItems {
+    font-size: 15px;
+  }
+}
