@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-
+import Searchbox from "../../components/Searchbox/Searchbox";
 import Auth from "../../utils/auth";
 import "./Dashboard.css";
 import { QUERY_FOOD_BY_NAME, QUERY_ME } from "../../utils/queries";
@@ -34,7 +34,6 @@ const Dashboard = () => {
     };
   });
 
-
   useEffect(() => {
     document.title = ` Easy-FDA | Dashboard `;
   }, []);
@@ -46,7 +45,12 @@ const Dashboard = () => {
   const { data } = useQuery(QUERY_ME);
   const userData = data?.me || {};
 
+
+  const { food } = useQuery(QUERY_FOOD_BY_NAME);
+  const foodItems = food?.foodByName || {};
+
   //console.log(userData);
+
 
   if (!userData?.username) {
     return <p>Must be logged in!</p>;
@@ -78,7 +82,6 @@ const Dashboard = () => {
 
   let toogleClose = close ? "close" : "open";
   let toogleActive = active ? "act" : " ";
-   
 
   const handleFormSubmitInput = async (e) => {
     e.preventDefault();
@@ -87,8 +90,6 @@ const Dashboard = () => {
       return false;
     }
     foodSearch({ variables: { query: searchInput } });
-
-     
   };
 
   const handleSaveFood = async (fdcId) => {
@@ -127,6 +128,7 @@ const Dashboard = () => {
     //  } 
      
    
+
 
   // const [removeFood, { loading, error, data }] = useMutation(REMOVE_FOOD);
   // removeFood({ variables: { fdcId: "2012128" } });
@@ -183,13 +185,11 @@ const Dashboard = () => {
           <div className="top">
             <i
               onClick={handleClick}
-              className="fa-solid fa-bars iconDashboard"
-            ></i>
+              className="fa-solid fa-bars iconDashboard"></i>
             <div onClick={handleClick2}>
               <div
                 onClick={handleClick1}
-                className={`toggle-btn ${toogleActive} `}
-              >
+                className={`toggle-btn ${toogleActive} `}>
                 <div className="inner-circle"></div>
               </div>
             </div>
@@ -222,27 +222,32 @@ const Dashboard = () => {
               <i className="fa-solid fa-gauge"></i> <h2> Dashboard</h2>
             </div>
             <div className={`infoContainer1 ${toogleDark1}`}>
-              <h2>{searchedFood?.foodByName?.description}</h2>
-              <p>{searchedFood?.foodByName?.dataType}</p>
-              <p>{searchedFood?.foodByName?.brandOwner}</p>
+              {searchedFood.map((food) => (
+                <>
+                  <h2>{food.description}</h2>
+                  <p>{food.dataType}</p>
+                  <p>{food.brandOwner}</p>
+                </>
+              ))}
             </div>
-
- {/*  following button is working */}
-            <button
-            className="saveBtn"
-            onClick={() => handleSaveFood(searchedFood[0].fdcId)}>
+            ;
+            {/*  following button is working
+            {/* <button
+              className="saveBtn"
+              onClick={() => handleSaveFood(searchedFood[0].fdcId)}>
               Save Food
-            </button>
- 
-
+            </button> */}
           </div>
           <div className="bottomInfoContainer">
             <div className="titleBottom">
               <i className="fa-solid fa-seedling"></i>{" "}
-              <h2>{searchedFood?.foodByName?.description}</h2>
+              {searchedFood.map((food) => (
+                <>
+                  <h2>{food.description}</h2>
+                </>
+              ))}
             </div>
             <div className={`tableBottom ${toogleDark3}`}>
- 
               <table className="content-table">
                 <thead>
                   <tr>
@@ -253,20 +258,29 @@ const Dashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {searchedFood?.foodByName?.foodNutrients?.map((nutrient) => {
+                  {searchedFood.map((nutrient) => {
                     return (
-                      <tr
-                        key={`${searchedFood?.foodName?.description}-${nutrient.nutrientId}`}>
-                        {" "}
-                        <td>{nutrient.nutrientName}</td>
-                        <td>{nutrient.nutrientNumber}</td>
-                        <td>{nutrient.unitName}</td>
-                      </tr>
+                      <>
+                        <tr key={nutrient.description}>
+                          <td>{nutrient.foodNutrients[0].nutrientName}</td>
+                          <td>{nutrient.foodNutrients[0].nutrientNumber}</td>
+                          <td>{nutrient.foodNutrients[0].unitName}</td>
+                        </tr>
+                        {/* <tr>
+                          <td>{nutrient.foodNutrients[1].nutrientName}</td>
+                          <td>{nutrient.foodNutrients[1].nutrientNumber}</td>
+                          <td>{nutrient.foodNutrients[1].unitName}</td>
+                        </tr>
+                        <tr>
+                          <td>{nutrient.foodNutrients[2].nutrientName}</td>
+                          <td>{nutrient.foodNutrients[2].nutrientNumber}</td>
+                          <td>{nutrient.foodNutrients[2].unitName}</td>
+                        </tr> */}
+                      </>
                     );
                   })}
                 </tbody>
               </table>
- 
             </div>
           </div>
         </section>
