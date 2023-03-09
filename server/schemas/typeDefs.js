@@ -21,7 +21,7 @@ const typeDefs = gql`
       sortOrder: String
       ): [Food]
     foodById(fdcId: ID!): Food
-    foodByName(query: String!): Food
+    foodByName(query: String!): [Food]
   }
 
   input FoodByName { 

@@ -2,10 +2,11 @@ import { React, useState, useEffect } from "react";
 
 import Auth from "../../utils/auth";
 import "./Dashboard.css";
-import Searchbox from "../../components/Searchbox/Searchbox";
 import { QUERY_FOOD_BY_NAME, QUERY_ME } from "../../utils/queries";
 import { SAVE_FOOD } from "../../utils/mutations";
+import { saveFoodIds, getSavedFoodIds } from "../../utils/localStorage";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+
 //import { QUERY_ME } from './utils/queries';
 
 // import { SearchFoods } from "../../utils/api";
@@ -21,23 +22,25 @@ const Dashboard = () => {
   const [dark3, setDark3] = useState(false);
 
   const [searchInput, setSearchInput] = useState("");
-  const [searchedFood, setSearchedFood] = useState([]); // <- will have getSavedFoodIds as the argument
-  const [savedFood, setSavedFood] = useState([]);
+
+  const [searchedFood, setSearchedFood] = useState([]);
+  const [savedFoodIds, setSavedFoodIds] = useState(getSavedFoodIds());
 
   const [saveFood] = useMutation(SAVE_FOOD);
 
-  // useEffect(() => {
-  //   return () => {
-  //     saveFoodId(savedFood)
-  //   }
-  // })
+  useEffect(() => {
+    return () => {
+      saveFoodIds(savedFoodIds);
+    };
+  });
+
 
   useEffect(() => {
     document.title = ` Easy-FDA | Dashboard `;
   }, []);
 
   const [foodSearch] = useLazyQuery(QUERY_FOOD_BY_NAME, {
-    onCompleted: (food) => setSearchedFood(food),
+    onCompleted: (food) => setSearchedFood(food.foodByName),
   });
 
   const { data } = useQuery(QUERY_ME);
@@ -75,17 +78,7 @@ const Dashboard = () => {
 
   let toogleClose = close ? "close" : "open";
   let toogleActive = active ? "act" : " ";
-  // client.query({
-  //   query: QUERY_ALL_FOODS,
-  //   variables: { query: 'food' },
-  // })
-  //   .then(result => console.log(result))
-  //   .catch(error => console.error(error));
-
-  // const { loading, error, data } = useQuery(QUERY_ALL_FOODS, {variables: {query: "foods"}});
-  // if (loading) return null;
-  // if (error) return "Error: " + error;
-  // console.log(data);
+   
 
   const handleFormSubmitInput = async (e) => {
     e.preventDefault();
@@ -95,34 +88,31 @@ const Dashboard = () => {
     }
     foodSearch({ variables: { query: searchInput } });
 
-    // try {
-
-    //   setSearchInput(" ");
-    // } catch (err) {
-    //   console.error(err);
-    // }
+     
   };
 
   const handleSaveFood = async (fdcId) => {
     const foodToSave = searchedFood.find((food) => food.fdcId === fdcId);
 
-    try {
-      await saveFood({
-        variables: { food: foodToSave },
-        update: (cache) => {
-          const { me } = cache.readQuery({ query: QUERY_ME });
-          console.log(me);
-          console.log(me.savedFood);
-          cache.writeQuery({
-            query: QUERY_ME,
-            data: { me: { ...me, savedFood: [...me.savedFood, foodToSave] } },
-          });
-        },
-      });
-      setSavedFood([...savedFood, foodToSave.fdcId]);
-    } catch (error) {
-      console.error(error);
-    }
+    saveFoodIds([foodToSave]); // ----searchedFood is an array now, therefore .find is working---
+    // try {
+    //   await saveFoodIds({
+    //     variables: { food: foodToSave },
+    //     update: (cache) => {
+    //       const { me } = cache.readQuery({ query: QUERY_ME });
+    //       console.log(me);
+    //       console.log(me.savedFood);
+    //       cache.writeQuery({
+    //         query: QUERY_ME,
+    //         data: { me: { ...me, savedFood: [...me.savedFood, foodToSave] } },
+    //       });
+    //     },
+    //   });
+    //   setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
+    // } catch (error) {
+    //   console.error(error);
+    // }  ---- there seems to be a graphql error in here still, hence commented out
+
   };
 
   // const [removeFood, { loading, error, data }] = useMutation(REMOVE_FOOD);
@@ -180,11 +170,13 @@ const Dashboard = () => {
           <div className="top">
             <i
               onClick={handleClick}
-              className="fa-solid fa-bars iconDashboard"></i>
+              className="fa-solid fa-bars iconDashboard"
+            ></i>
             <div onClick={handleClick2}>
               <div
                 onClick={handleClick1}
-                className={`toggle-btn ${toogleActive} `}>
+                className={`toggle-btn ${toogleActive} `}
+              >
                 <div className="inner-circle"></div>
               </div>
             </div>
@@ -222,11 +214,14 @@ const Dashboard = () => {
               <p>{searchedFood?.foodByName?.brandOwner}</p>
             </div>
 
+ {/*  following button is working */}
             <button
-              className="saveBtn"
-              onClick={() => handleSaveFood(saveFood?.food?.fdcId)}>
+            className="saveBtn"
+            onClick={() => handleSaveFood(searchedFood[0].fdcId)}>
               Save Food
             </button>
+ 
+
           </div>
           <div className="bottomInfoContainer">
             <div className="titleBottom">
@@ -234,6 +229,7 @@ const Dashboard = () => {
               <h2>{searchedFood?.foodByName?.description}</h2>
             </div>
             <div className={`tableBottom ${toogleDark3}`}>
+ 
               <table className="content-table">
                 <thead>
                   <tr>
@@ -257,6 +253,7 @@ const Dashboard = () => {
                   })}
                 </tbody>
               </table>
+ 
             </div>
           </div>
         </section>
