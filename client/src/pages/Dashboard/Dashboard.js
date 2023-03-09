@@ -94,18 +94,19 @@ const Dashboard = () => {
   const handleSaveFood = async (fdcId) => {
   
     const foodToSave = searchedFood.find((food) => food.fdcId === fdcId)
+    saveFoodIds([foodToSave]); 
     // ----searchedFood is an array now, therefore .find is working---
 
-    try {
-      const { data } = await saveFood({
-        variables: { input: foodToSave}
-      });
-      setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
-    } catch  (err) {
-      console.error(err);
-    }
+    // try {
+    //   const { data } = await saveFood({
+    //     variables: { input: foodToSave}
+    //   });
+    //   setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
+    // } catch  (err) {
+    //   console.error(err);
+    // }
     };
-    // saveFoodIds([foodToSave]); /
+   
  
     // try {
     //   await saveFoodIds({
