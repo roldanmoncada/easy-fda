@@ -46,7 +46,7 @@ const Dashboard = () => {
   const { data } = useQuery(QUERY_ME);
   const userData = data?.me || {};
 
-  console.log(userData);
+  //console.log(userData);
 
   if (!userData?.username) {
     return <p>Must be logged in!</p>;
@@ -92,9 +92,21 @@ const Dashboard = () => {
   };
 
   const handleSaveFood = async (fdcId) => {
-    const foodToSave = searchedFood.find((food) => food.fdcId === fdcId);
+  
+    const foodToSave = searchedFood.find((food) => food.fdcId === fdcId)
+    // ----searchedFood is an array now, therefore .find is working---
 
-    saveFoodIds([foodToSave]); // ----searchedFood is an array now, therefore .find is working---
+    try {
+      const { data } = await saveFood({
+        variables: { input: foodToSave}
+      });
+      setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
+    } catch  (err) {
+      console.error(err);
+    }
+    };
+    // saveFoodIds([foodToSave]); /
+ 
     // try {
     //   await saveFoodIds({
     //     variables: { food: foodToSave },
@@ -111,9 +123,9 @@ const Dashboard = () => {
     //   setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
     // } catch (error) {
     //   console.error(error);
-    // }  ---- there seems to be a graphql error in here still, hence commented out
-
-  };
+    //  } 
+     
+   
 
   // const [removeFood, { loading, error, data }] = useMutation(REMOVE_FOOD);
   // removeFood({ variables: { fdcId: "2012128" } });
