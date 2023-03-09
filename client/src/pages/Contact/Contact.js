@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import "./Contact.css";
 import emailjs from "@emailjs/browser";
 import Swal from "sweetalert2";
@@ -6,6 +6,10 @@ import "animate.css";
 
 const Contact = () => {
   const form = useRef();
+
+  useEffect(() => {
+    document.title = ` Easy-FDA | About `;
+  }, []);
 
   const sendEmail = (e) => {
     e.preventDefault();

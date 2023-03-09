@@ -1,4 +1,3 @@
-
 import { React, useState, useEffect } from "react";
 
 import Auth from "../../utils/auth";
@@ -23,6 +22,7 @@ const Dashboard = () => {
   const [dark3, setDark3] = useState(false);
 
   const [searchInput, setSearchInput] = useState("");
+
   const [searchedFood, setSearchedFood] = useState([]);
   const [savedFoodIds, setSavedFoodIds] = useState(getSavedFoodIds());
 
@@ -33,6 +33,11 @@ const Dashboard = () => {
       saveFoodIds(savedFoodIds);
     };
   });
+
+
+  useEffect(() => {
+    document.title = ` Easy-FDA | Dashboard `;
+  }, []);
 
   const [foodSearch] = useLazyQuery(QUERY_FOOD_BY_NAME, {
     onCompleted: (food) => setSearchedFood(food.foodByName),
@@ -88,6 +93,7 @@ const Dashboard = () => {
 
   const handleSaveFood = async (fdcId) => {
     const foodToSave = searchedFood.find((food) => food.fdcId === fdcId);
+
     saveFoodIds([foodToSave]); // ----searchedFood is an array now, therefore .find is working---
     // try {
     //   await saveFoodIds({
@@ -106,6 +112,7 @@ const Dashboard = () => {
     // } catch (error) {
     //   console.error(error);
     // }  ---- there seems to be a graphql error in here still, hence commented out
+
   };
 
   // const [removeFood, { loading, error, data }] = useMutation(REMOVE_FOOD);
@@ -121,7 +128,7 @@ const Dashboard = () => {
           <div className="menu-items">
             <ul className="nav-links1">
               <li>
-                <a href="/#">
+                <a href="/Dashboard">
                   <i className="fa-solid fa-house"></i>
                   <span className="link-name">Home</span>
                 </a>
@@ -206,11 +213,15 @@ const Dashboard = () => {
               <p>{searchedFood?.foodByName?.dataType}</p>
               <p>{searchedFood?.foodByName?.brandOwner}</p>
             </div>
+
  {/*  following button is working */}
-            <button onClick={() => handleSaveFood(searchedFood[0].fdcId)}>
+            <button
+            className="saveBtn"
+            onClick={() => handleSaveFood(searchedFood[0].fdcId)}>
               Save Food
             </button>
  
+
           </div>
           <div className="bottomInfoContainer">
             <div className="titleBottom">
