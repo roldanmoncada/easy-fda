@@ -6,6 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .card {
@@ -93,6 +94,7 @@
   width: auto;
   font-family: "Roboto", sans-serif;
   margin-left: 50px;
+  margin-bottom: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
