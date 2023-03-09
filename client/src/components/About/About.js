@@ -6,8 +6,8 @@ const MySwal = withReactContent(Swal);
 
 const About = () => {
   MySwal.fire({
-    title: "About Easy-FDA",
-    text: "Easy-FDA is a cool project!!!",
+    title: "About Easy-USDA",
+    text: "Easy-USDA This app allows users to query the official USDA API",
     showClass: {
       popup: "animate__animated animate__fadeInDown",
     },
