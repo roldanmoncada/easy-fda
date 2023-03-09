@@ -1,6 +1,6 @@
-import React from "react";
+import { React, useEffect } from "react";
 import "./Content.css";
-import { REMOVE_FOOD } from "../../utils/mutations"
+import { REMOVE_FOOD } from "../../utils/mutations";
 import { QUERY_ME } from "../../utils/queries";
 import { useQuery, useMutation } from "@apollo/client";
 import Auth from "../../utils/auth";
@@ -11,12 +11,18 @@ const Content = () => {
   const [ deleteFood ] = useMutation(REMOVE_FOOD);
   const userData = data?.me || {};
 
+
   //console.log(userData)
   
+  console.log(userData);
+
+  useEffect(() => {
+    document.title = ` Easy-FDA | Content `;
+  }, []);
+
+
   if (!userData?.username) {
-    return (
-      <p>Must be logged in!</p>
-    )
+    return <p>Must be logged in!</p>;
   }
 const handleDeleteFood = async (fdcId) => {
   const token = Auth.loggedIn() ? Auth.getToken() : null;

@@ -16,6 +16,11 @@ const Home = () => {
 
   // console.log({ data1 });
   // update state based on form input changes
+
+  useEffect(() => {
+    document.title = ` Easy-FDA | Home `;
+  }, []);
+
   const handleChangeLogIn = (event) => {
     const { name, value } = event.target;
 
