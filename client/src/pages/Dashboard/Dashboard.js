@@ -87,27 +87,38 @@ const Dashboard = () => {
   };
 
   const handleSaveFood = async (fdcId) => {
-    const foodToSave = searchedFood.find((food) => food.fdcId === fdcId);
-    saveFoodIds([foodToSave]); // ----searchedFood is an array now, therefore .find is working---
+    const foodToSave = searchedFood.find((food) => food.fdcId === fdcId)
+    // ----searchedFood is an array now, therefore .find is working---
+
     try {
-      await saveFoodIds({
-        variables: { food: foodToSave },
-        update: (cache) => {
-          const { me } = cache.readQuery({ query: QUERY_ME });
-          console.log(me);
-          console.log(me.savedFood);
-          cache.writeQuery({
-            query: QUERY_ME,
-            data: { me: { ...me, savedFood: [...me.savedFood, foodToSave] } },
-          });
-        },
+      const { data } = await saveFood({
+        variables: { input: foodToSave}
       });
       setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
-    } catch (error) {
-      console.error(error);
-     } 
+    } catch  (err) {
+      console.error(err);
+    }
+    };
+    // saveFoodIds([foodToSave]); /
+    // try {
+    //   await saveFoodIds({
+    //     variables: { food: foodToSave },
+    //     update: (cache) => {
+    //       const { me } = cache.readQuery({ query: QUERY_ME });
+    //       console.log(me);
+    //       console.log(me.savedFood);
+    //       cache.writeQuery({
+    //         query: QUERY_ME,
+    //         data: { me: { ...me, savedFood: [...me.savedFood, foodToSave] } },
+    //       });
+    //     },
+    //   });
+    //   setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
+    // } catch (error) {
+    //   console.error(error);
+    //  } 
      
-  };
+  
 
   // const [removeFood, { loading, error, data }] = useMutation(REMOVE_FOOD);
   // removeFood({ variables: { fdcId: "2012128" } });
