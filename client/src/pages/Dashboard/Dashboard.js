@@ -273,9 +273,9 @@ const Dashboard = () => {
                   {searchedFood.map((nutrient) => {
                     return nutrient.foodNutrients.map((foodNutrient, index) => (
                       <tr key={`${nutrient.description}-${index}`}>
-                        <td>{foodNutrient.nutrientName}</td>
-                        <td>{foodNutrient.nutrientNumber}</td>
-                        <td>{foodNutrient.unitName}</td>
+                        <td key={`${foodNutrient.nutrientId}`}>{foodNutrient.nutrientName}</td>
+                        <td key={`${foodNutrient.nutrientNumber}`}>{foodNutrient.nutrientNumber}</td>
+                        <td key={`${foodNutrient.unitName}`}>{foodNutrient.unitName}</td>
                       </tr>
                     ));
                   })}
