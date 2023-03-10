@@ -1,8 +1,8 @@
 import { React, useEffect, useState } from "react";
 import "./Content.css";
-import { REMOVE_FOOD } from "../../utils/mutations";
+// import { REMOVE_FOOD } from "../../utils/mutations";
 import { QUERY_ME } from "../../utils/queries";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import Auth from "../../utils/auth";
 import { removeFoodId } from "../../utils/localStorage";
 import { motion } from "framer-motion";

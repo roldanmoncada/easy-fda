@@ -1,10 +1,10 @@
-# EASY-FDA
+# EASY-USDA
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Table of Contents
 
-- [EASY-FDA](#easy-fda)
+- [EASY-USDA](#easy-usda)
   - [Table of Contents](#table-of-contents)
   - [Description](#description)
   - [Usage](#usage)
@@ -48,7 +48,7 @@ If you have an idea to improve this app, fork the repo, create your branch, comm
 
 ## Link
 
-[Go to EASY-FDA](..........)
+[Go to EASY-USDA](https://easy-usda.herokuapp.com/dashboard)
 
 ## Demonstration
 
@@ -56,7 +56,7 @@ Main page is the login screen. If a user doesn't have an account, they can click
 
 ![image](./client/public/images/%20home-screen2.png)
 
-At the signup page, users are asked to input 3 fields of information that will pertain to their new EASY-FDA account.
+At the signup page, users are asked to input 3 fields of information that will pertain to their new EASY-USDA account.
 
 ![image](./client/public/images/Home-screen1.png)
 
@@ -72,7 +72,7 @@ Entries of food information from USDA API saved by the user
 
 ![image](./client/public/images/saved-search.png)
 
-ABOUT page describing the EASY-FDA web application
+ABOUT page describing the EASY-USDA web application
 
 ![image](./client/public/images/%20about.png)
 
@@ -84,4 +84,4 @@ When a user signs out, they will be redirected to the login screen where they ca
 
 ![image](./client/public/images/%20home-screen1.png)
 
-Thank you for using EASY-FDA!
+Thank you for using EASY-USDA!
