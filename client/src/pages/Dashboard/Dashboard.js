@@ -43,8 +43,8 @@ const Dashboard = () => {
   const { data } = useQuery(QUERY_ME);
   const userData = data?.me || {};
 
-  const { food } = useQuery(QUERY_FOOD_BY_NAME);
-  const foodItems = food?.foodByName || {};
+  // const { food } = useQuery(QUERY_FOOD_BY_NAME);
+  // const foodItems = food?.foodByName || {};
 
   //console.log(userData);
 
