@@ -3,9 +3,9 @@ import Searchbox from "../../components/Searchbox/Searchbox";
 import Auth from "../../utils/auth";
 import "./Dashboard.css";
 import { QUERY_FOOD_BY_NAME, QUERY_ME } from "../../utils/queries";
-import { SAVE_FOOD } from "../../utils/mutations";
+// import { SAVE_FOOD } from "../../utils/mutations";
 import { saveFoodIds, getSavedFoodIds } from "../../utils/localStorage";
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import { motion } from "framer-motion";
 //import { QUERY_ME } from './utils/queries';
 
