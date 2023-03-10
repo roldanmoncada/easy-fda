@@ -24,7 +24,7 @@ const userSchema = new Schema(
     },
 
     // // set savedFoods to be an array of data that adheres to the foodSchema
-     savedFood: [foodSchema],
+    //  savedFood: [foodSchema],
     // // set this to use virtual below
   },
   {
