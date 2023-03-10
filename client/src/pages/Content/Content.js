@@ -35,6 +35,7 @@ const Content = () => {
       //   variables: {fdcId}
       // });
       removeFoodId(fdcId);
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
@@ -69,7 +70,7 @@ const Content = () => {
     >
       {savedFoodSearch.map((oneFoodSearch) => {
         return (
-          <>
+          
             <div
               layoutTransition={{ duration: 1 }}
               initial={{ opacity: 0.6 }}
@@ -85,13 +86,14 @@ const Content = () => {
                 boxShadow: "5px 5px 15px rgba(0, 0, 0, 0.9)",
               }}
               className="cardResume"
+              key={`${oneFoodSearch.fdcId}`}
             >
               <div
-                key={`${oneFoodSearch.description}`}
+               
                 className="cardsContainer"
               >
                 <span className="icon-close xBton">
-                  <i className="fas fa-xmark" onClick={()=> handleDeleteFood(savedFoodSearch.fdcId)}></i>
+                  <i className="fas fa-xmark" onClick={()=> handleDeleteFood(oneFoodSearch.fdcId)}></i>
                 </span>
                 <div className="infoContainer1">
                   <motion.h2 Layout="position">
@@ -130,7 +132,7 @@ const Content = () => {
                 &nbsp; &nbsp;
               </div>
             </div>
-          </>
+          
         );
       })}
     </motion.div>

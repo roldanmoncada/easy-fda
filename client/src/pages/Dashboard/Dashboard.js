@@ -235,12 +235,12 @@ const Dashboard = () => {
               <i className="fa-solid fa-gauge"></i> <h2> Dashboard</h2>
             </div>
             <div className={`infoContainer1 ${toogleDark1}`}>
-              {searchedFood.map((food) => (
-                <>
+              {searchedFood.map((food, index) => (
+                <div key={index}>
                   <h2>{food.description}</h2>
                   <p>{food.dataType}</p>
                   <p>{food.brandOwner}</p>
-                </>
+                </div>
               ))}
             </div>
             {/*  following button is working */}
@@ -253,10 +253,10 @@ const Dashboard = () => {
           <div className="bottomInfoContainer">
             <div className="titleBottom">
               <i className="fa-solid fa-seedling"></i>{" "}
-              {searchedFood.map((food) => (
-                <>
-                  <h2>{food.description}</h2>
-                </>
+              {searchedFood.map((food, index) => (
+                
+                  <h2 key={index}>{food.description}</h2>
+              
               ))}
             </div>
             <div className={`tableBottom ${toogleDark3}`}>
