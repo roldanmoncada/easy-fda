@@ -8,7 +8,7 @@ const { typeDefs, resolvers } = require("./schemas");
 const db = require("./config/connection");
 const cors = require("cors");
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 'mongodb+srv://roldan:zee4u11ikVeqy2uQ@cluster0.8vto6kz.mongodb.net/?retryWrites=true&w=majority';
 const app = express();
 const server = new ApolloServer({
   typeDefs,
