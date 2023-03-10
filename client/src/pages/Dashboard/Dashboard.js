@@ -6,7 +6,7 @@ import { QUERY_FOOD_BY_NAME, QUERY_ME } from "../../utils/queries";
 import { SAVE_FOOD } from "../../utils/mutations";
 import { saveFoodIds, getSavedFoodIds } from "../../utils/localStorage";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-
+import { motion } from "framer-motion";
 //import { QUERY_ME } from './utils/queries';
 
 // import { SearchFoods } from "../../utils/api";
@@ -92,7 +92,24 @@ const Dashboard = () => {
     const foodToSave = searchedFood.find((food) => food.fdcId === fdcId);
     saveFoodIds(foodToSave);
     // ----searchedFood is an array now, therefore .find is working---
-
+    // try {
+    //   await saveFoodIds({
+    //     variables: { food: foodToSave },
+    //     update: (cache) => {
+    //       const { me } = cache.readQuery({ query: QUERY_ME });
+    //       console.log(me);
+    //       console.log(me.savedFood);
+    //       cache.writeQuery({
+    //         query: QUERY_ME,
+    //         data: { me: { ...me, savedFood: [...me.savedFood, foodToSave] } },
+    //       });
+    //     },
+    //   });
+    //   setSavedFoodIds([...savedFoodIds, foodToSave.fdcId]);
+    // } catch (error) {
+    //   console.error(error);
+    //  } 
+     
     // try {
     //   const { data } = await saveFood({
     //     variables: { input: foodToSave}
@@ -128,7 +145,12 @@ const Dashboard = () => {
   // console.log(data);
 
   return (
-    <div className={`dashboardContainer ${toogleDark}`}>
+    <motion.div
+      className={`dashboardContainer ${toogleDark}`}
+      initial={{ width: 0 }}
+      animate={{ width: "100%" }}
+      exit={{ x: 0 }}
+      transition={{ duration: 1 }}>
       <div className="flexContainer">
         <aside className={`${toogleClose} ${toogleDark2}`}>
           <div className="menu-items">
@@ -176,13 +198,11 @@ const Dashboard = () => {
           <div className="top">
             <i
               onClick={handleClick}
-              className="fa-solid fa-bars iconDashboard"
-            ></i>
+              className="fa-solid fa-bars iconDashboard"></i>
             <div onClick={handleClick2}>
               <div
                 onClick={handleClick1}
-                className={`toggle-btn ${toogleActive} `}
-              >
+                className={`toggle-btn ${toogleActive} `}>
                 <div className="inner-circle"></div>
               </div>
             </div>
@@ -215,29 +235,28 @@ const Dashboard = () => {
               <i className="fa-solid fa-gauge"></i> <h2> Dashboard</h2>
             </div>
             <div className={`infoContainer1 ${toogleDark1}`}>
-              {searchedFood.map((food) => (
-                <>
+              {searchedFood.map((food, index) => (
+                <div key={index}>
                   <h2>{food.description}</h2>
                   <p>{food.dataType}</p>
                   <p>{food.brandOwner}</p>
-                </>
+                </div>
               ))}
             </div>
             {/*  following button is working */}
             <button
               className="saveBtn"
-              onClick={() => handleSaveFood(searchedFood[0].fdcId)}
-            >
+              onClick={() => handleSaveFood(searchedFood[0].fdcId)}>
               Save Food
             </button>
           </div>
           <div className="bottomInfoContainer">
             <div className="titleBottom">
               <i className="fa-solid fa-seedling"></i>{" "}
-              {searchedFood.map((food) => (
-                <>
-                  <h2>{food.description}</h2>
-                </>
+              {searchedFood.map((food, index) => (
+                
+                  <h2 key={index}>{food.description}</h2>
+              
               ))}
             </div>
             <div className={`tableBottom ${toogleDark3}`}>
@@ -254,9 +273,9 @@ const Dashboard = () => {
                   {searchedFood.map((nutrient) => {
                     return nutrient.foodNutrients.map((foodNutrient, index) => (
                       <tr key={`${nutrient.description}-${index}`}>
-                        <td>{foodNutrient.nutrientName}</td>
-                        <td>{foodNutrient.nutrientNumber}</td>
-                        <td>{foodNutrient.unitName}</td>
+                        <td key={`${foodNutrient.nutrientId}`}>{foodNutrient.nutrientName}</td>
+                        <td key={`${foodNutrient.nutrientNumber}`}>{foodNutrient.nutrientNumber}</td>
+                        <td key={`${foodNutrient.unitName}`}>{foodNutrient.unitName}</td>
                       </tr>
                     ));
                   })}
@@ -266,7 +285,7 @@ const Dashboard = () => {
           </div>
         </section>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

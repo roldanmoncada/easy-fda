@@ -133,7 +133,7 @@ const Home = () => {
         <div
           className="introduction"
           style={{ backgroundImage: `url(${require(`${randomImage1}`)})` }}>
-          <h1>Easy-FDA</h1>
+          <h1>Easy-USDA</h1>
           <div className="descriptionContainer">
             <p>
               Currently, anyone can Google a specific ingredient or product, but
