@@ -16,7 +16,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 
 const httpLink = createHttpLink({
-  uri: "mongodb+srv://roldan:zee4u11ikVeqy2uQ@cluster0.8vto6kz.mongodb.net/?retryWrites=true&w=majority",
+  uri: "/graphql",
 });
 
 // const errorLink = onError(({ graphQLErrors, networkError }) => {
