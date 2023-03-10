@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/easy-fda', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://roldan:zee4u11ikVeqy2uQ@cluster0.8vto6kz.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
