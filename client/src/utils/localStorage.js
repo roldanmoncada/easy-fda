@@ -33,6 +33,7 @@ export const saveFoodIds = (foodToSave) => {
 };
 
 export const removeFoodId = (fdcId) => {
+    console.log({fdcId})
   const savedFoodIds = localStorage.getItem("saved_food")
     ? JSON.parse(localStorage.getItem("saved_food"))
     : null;
@@ -42,7 +43,7 @@ export const removeFoodId = (fdcId) => {
   }
 
   const updatedSavedFoodIds = savedFoodIds?.filter(
-    (savedFoodId) => savedFoodId !== fdcId
+    (savedFoodId) => savedFoodId.fdcId != fdcId
   );
   localStorage.setItem("saved_food", JSON.stringify(updatedSavedFoodIds));
 
